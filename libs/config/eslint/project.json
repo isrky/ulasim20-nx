@@ -1,0 +1,13 @@
+{
+  "name": "config-eslint",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/config/eslint/src",
+  "projectType": "library",
+  "tags": ["type:config"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": { "command": "biome lint libs/config/eslint" }
+    }
+  }
+}

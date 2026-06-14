@@ -1,0 +1,15 @@
+{
+  "name": "@ulasim20/config-eslint",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./eslint.config.mjs"
+  },
+  "dependencies": {
+    "@nx/eslint": "19.8.0",
+    "@nx/eslint-plugin": "19.8.0",
+    "eslint": "^9.0.0"
+  }
+}
