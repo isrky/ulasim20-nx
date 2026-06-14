@@ -99,7 +99,7 @@ export class KmzRouteGeometryService {
   private readonly cache: CacheService
 
   constructor(
-    private readonly env: Env,
+    env: Env,
     private readonly fetchImpl: typeof fetch = fetch,
   ) {
     this.cache = new CacheService(env)

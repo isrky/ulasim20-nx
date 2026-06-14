@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Denizli Ulaşım Backend API - Hono + Cloudflare Workers",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir=dist",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "planner:fetch-normalize": "tsx scripts/planner-ci.ts fetch-normalize",
+    "planner:compute-source-signature": "tsx scripts/planner-ci.ts compute-source-signature",
+    "planner:compile-dataset": "tsx scripts/planner-ci.ts compile-dataset",
+    "planner:validate-dataset": "tsx scripts/planner-ci.ts validate-dataset",
+    "planner:promote-manifest": "tsx scripts/planner-ci.ts promote-manifest"
+  },
+  "dependencies": {
+    "hono": "^4.12.14",
+    "@ulasim20/types-transport": "workspace:*",
+    "@ulasim20/types-api": "workspace:*",
+    "@ulasim20/util-geo": "workspace:*",
+    "@ulasim20/feature-planner": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.5.41",
+    "@cloudflare/workers-types": "^4.20241205.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.5.4",
+    "vitest": "2.1.9",
+    "wrangler": "^4.83.0"
+  }
+}

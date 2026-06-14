@@ -4,7 +4,7 @@ import { PlannerStorageService } from './planner-storage'
 export class PlannerPipelineService {
   private storage: PlannerStorageService
 
-  constructor(private env: Env) {
+  constructor(env: Env) {
     this.storage = new PlannerStorageService(env)
   }
 
