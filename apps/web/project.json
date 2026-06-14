@@ -20,7 +20,13 @@
     },
     "lint": {
       "executor": "nx:run-commands",
-      "options": { "command": "biome lint apps/web" }
+      "options": {
+        "commands": [
+          "biome lint apps/web",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'apps/web/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      }
     },
     "type-check": {
       "executor": "nx:run-commands",
