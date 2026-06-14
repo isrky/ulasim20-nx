@@ -5,8 +5,14 @@
   "projectType": "library",
   "tags": ["type:types"],
   "targets": {
-    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/types/api" } },
-    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/types/api" } },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --noEmit -p libs/types/api" }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --noEmit -p libs/types/api" }
+    },
     "lint": { "executor": "nx:run-commands", "options": { "command": "biome lint libs/types/api" } }
   }
 }
