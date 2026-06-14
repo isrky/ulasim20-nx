@@ -1,0 +1,12 @@
+{
+  "name": "ui-map",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/map/src",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:shared"],
+  "targets": {
+    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/ui/map" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/ui/map" } },
+    "lint": { "executor": "nx:run-commands", "options": { "command": "biome lint libs/ui/map" } }
+  }
+}
