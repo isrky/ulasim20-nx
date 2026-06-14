@@ -315,7 +315,6 @@ export function getTsConfigPreset() {
   },
   "dependencies": {
     "@nx/eslint": "19.8.0",
-    "@nx/eslint-plugin": "19.8.0",
     "eslint": "^9.0.0"
   }
 }
@@ -324,8 +323,6 @@ export function getTsConfigPreset() {
 - [ ] **Step 5: Create `libs/config/eslint/eslint.config.mjs`**
 
 ```javascript
-import nx from '@nx/eslint-plugin';
-
 const boundaryRule = {
   files: ['*.ts', '*tsx', '*.js', '*.jsx'],
   rules: {

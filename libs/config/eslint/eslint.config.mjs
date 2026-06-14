@@ -1,5 +1,3 @@
-import nx from '@nx/eslint-plugin';
-
 const boundaryRule = {
   files: ['*.ts', '*tsx', '*.js', '*.jsx'],
   rules: {
