@@ -36,7 +36,9 @@
     "@nx/js": "19.8.0",
     "@nx/react": "19.8.0",
     "@nx/workspace": "19.8.0",
+    "@types/node": "^24.10.0",
     "nx": "19.8.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "2.1.9"
   }
 }
