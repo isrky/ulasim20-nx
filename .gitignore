@@ -52,3 +52,6 @@ Thumbs.db
 
 # Superpowers brainstrom
 .superpowers/
+
+# Worktrees
+.worktrees/
