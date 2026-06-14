@@ -1,8 +1,13 @@
 import path from 'node:path'
-import { defineWorkspace } from 'vitest/config'
+import { defineConfig, defineWorkspace } from 'vitest/config'
 
 export default defineWorkspace([
   {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'apps/web/src')
+      }
+    },
     test: {
       name: 'frontend',
       environment: 'jsdom',
