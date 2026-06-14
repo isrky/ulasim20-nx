@@ -1,5 +1,5 @@
 import { DesktopNav, MobileNav } from '@/components/navigation'
-import { Card } from '@/components/ui/card'
+import { Card } from '@ulasim20/ui-primitives'
 import { useSEO } from '@/hooks/use-seo'
 import { TransitProvider } from '@/lib/transit-context'
 import { Calendar, Clock, Map, MessageSquare, Search, Star, TrendingUp, Users } from 'lucide-react'

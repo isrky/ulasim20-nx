@@ -1,7 +1,7 @@
 import { type BusRoute, type Station, getAllRoutes, getAllStations } from '@/api/denizli'
 import { DesktopNav, MobileNav } from '@/components/navigation'
-import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Card } from '@ulasim20/ui-primitives'
+import { Input } from '@ulasim20/ui-primitives'
 import { useSEO } from '@/hooks/use-seo'
 import { trackAnalyticsEvent, trackLineLookup, trackStopLookup } from '@/lib/analytics'
 import {

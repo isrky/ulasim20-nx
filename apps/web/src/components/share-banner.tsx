@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Card } from '@ulasim20/ui-primitives'
+import { Button } from '@ulasim20/ui-primitives'
 import { Share2, X } from 'lucide-react'
 import { trackAnalyticsEvent } from '@/lib/analytics'
 import { shareContent } from '@/lib/capacitor'

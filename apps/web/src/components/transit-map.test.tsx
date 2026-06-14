@@ -17,11 +17,12 @@ vi.mock('leaflet', () => {
       prototype: {},
       mergeOptions: vi.fn(),
     }
-
+    // biome-ignore lint/complexity/noUselessConstructor: needed for type compatibility with Leaflet
     constructor(_options?: unknown) {}
   }
 
   class DivIcon {
+    // biome-ignore lint/complexity/noUselessConstructor: needed for type compatibility with Leaflet
     constructor(_options?: unknown) {}
   }
 

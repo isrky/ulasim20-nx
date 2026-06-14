@@ -1,8 +1,8 @@
 import { DesktopNav, MobileNav } from '@/components/navigation'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Badge } from '@ulasim20/ui-primitives'
+import { Button } from '@ulasim20/ui-primitives'
+import { Card } from '@ulasim20/ui-primitives'
+import { Input } from '@ulasim20/ui-primitives'
 import { useSEO } from '@/hooks/use-seo'
 import { trackAnalyticsEvent } from '@/lib/analytics'
 import {

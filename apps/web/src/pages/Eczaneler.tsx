@@ -1,6 +1,6 @@
 import { type PharmacyData, type PharmacyResponse, getPharmacies } from '@/api/denizli'
 import { DesktopNav, MobileNav } from '@/components/navigation'
-import { Card } from '@/components/ui/card'
+import { Card } from '@ulasim20/ui-primitives'
 import { useSEO } from '@/hooks/use-seo'
 import { openExternalUrl } from '@/lib/capacitor'
 import { TransitProvider } from '@/lib/transit-context'

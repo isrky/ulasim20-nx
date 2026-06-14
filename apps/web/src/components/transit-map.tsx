@@ -9,8 +9,8 @@ import { getAllStations, getBusDataForStation, apiGet, getRouteGeometryResult, t
 import { fetchDirectKmzRouteGeometry } from '@/lib/kmz-route-geometry'
 import { searchStations, buildStationIndex, type IndexEntry } from '@/utils/search'
 import { cleanLineCode } from '@/utils/text'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button } from '@ulasim20/ui-primitives'
+import { Input } from '@ulasim20/ui-primitives'
 import { trackLineLookup, trackRouteMapOpen, trackStopLookup } from '@/lib/analytics'
 import { Locate, X, Clock, Bus, Search, MapPin, Navigation, List, AlertCircle } from 'lucide-react'
 

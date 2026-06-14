@@ -17,7 +17,6 @@
       "apps/mobile/android/**",
       "apps/web/functions/**",
       "apps/web/public/**",
-      "apps/web/src/components/**",
       "package-lock.json"
     ]
   },
@@ -77,10 +76,6 @@
       },
       "complexity": {
         "noForEach": "error"
-      },
-      "a11y": {
-        "useKeyWithClickEvents": "off",
-        "useButtonType": "warn"
       }
     }
   },
@@ -139,6 +134,30 @@
           "suspicious": {
             "noArrayIndexKey": "warn",
             "noShadowRestrictedNames": "warn"
+          }
+        }
+      }
+    },
+    {
+      "include": ["libs/ui/primitives/src/lib/ui/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useKeyWithClickEvents": "off",
+            "useButtonType": "warn",
+            "useFocusableInteractive": "warn",
+            "useSemanticElements": "warn",
+            "noRedundantRoles": "warn"
+          },
+          "suspicious": {
+            "noExplicitAny": "off",
+            "noArrayIndexKey": "warn"
+          },
+          "correctness": {
+            "useExhaustiveDependencies": "warn"
+          },
+          "security": {
+            "noDangerouslySetInnerHtml": "off"
           }
         }
       }
