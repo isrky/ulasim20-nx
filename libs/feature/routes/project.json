@@ -1,0 +1,12 @@
+{
+  "name": "feature-routes",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/feature/routes/src",
+  "projectType": "library",
+  "tags": ["type:feature", "scope:shared"],
+  "targets": {
+    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/feature/routes" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/feature/routes" } },
+    "lint": { "executor": "nx:run-commands", "options": { "command": "biome lint libs/feature/routes" } }
+  }
+}

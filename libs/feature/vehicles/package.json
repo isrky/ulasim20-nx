@@ -1,0 +1,14 @@
+{
+  "name": "@ulasim20/feature-vehicles",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@ulasim20/data-access-transport-api": "workspace:*",
+    "@ulasim20/types-transport": "workspace:*",
+    "@ulasim20/ui-map": "workspace:*"
+  },
+  "peerDependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" }
+}
