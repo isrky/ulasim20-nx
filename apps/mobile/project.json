@@ -1,0 +1,14 @@
+{
+  "name": "mobile",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mobile",
+  "projectType": "application",
+  "tags": ["scope:mobile"],
+  "targets": {
+    "cap:sync": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter mobile cap:sync" } },
+    "android:build": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter mobile android:build" } },
+    "android:open": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter mobile android:open" } },
+    "lint": { "executor": "nx:run-commands", "options": { "command": "biome lint apps/mobile" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit apps/mobile/capacitor.config.ts" } }
+  }
+}
