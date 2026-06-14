@@ -1,0 +1,45 @@
+name = "ulasim-backend"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+# Custom domain (Cloudflare-managed zone: ulasim20.com)
+# `custom_domain = true` provisions DNS + SSL automatically on first deploy.
+routes = [
+  { pattern = "api.ulasim20.com", custom_domain = true },
+]
+
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+
+# CPU limits for free tier optimization
+# Free tier: 10ms CPU per request
+# This config is informational - actual limits enforced by CF
+
+# KV Namespace bindings
+[[kv_namespaces]]
+binding = "CACHE"
+id = "be0c9471dd5d43af84cfc5e569bca26a"
+preview_id = "33c09d44bc2f46b386413e53deba20c1"
+
+[[r2_buckets]]
+binding = "DATASETS"
+bucket_name = "ulasim-planner-datasets"
+preview_bucket_name = "ulasim-planner-datasets"
+
+# Environment variables
+[vars]
+UPSTREAM_API = "https://ulasim.denizli.bel.tr"
+CACHE_TTL_STATIONS = "86400"
+CACHE_TTL_ROUTES = "86400"
+CACHE_TTL_ROUTE_STATIONS = "43200"
+CACHE_TTL_GRAPH = "21600"
+# Route geometry cache: 30 days (geometries rarely change)
+CACHE_TTL_GEOMETRY = "2592000"
+# Planner index cache: 6 hours
+CACHE_TTL_PLANNER_INDEX = "21600"
+# Real-time cache: 10 seconds (short-lived predictions)
+CACHE_TTL_REALTIME = "10"

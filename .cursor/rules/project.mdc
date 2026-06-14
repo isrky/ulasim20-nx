@@ -1,0 +1,90 @@
+---
+description: Denizli Akıllı Ulaşım Portalı - proje yapısı, teknoloji kararları ve geliştirme kuralları
+alwaysApply: true
+---
+
+# Denizli Akıllı Ulaşım Portalı
+
+Denizli şehir içi toplu taşıma bilgilerine hızlı erişim sağlayan web + mobil uygulama.
+Arayüz dili Türkçe. Kod, commit mesajları ve değişken isimleri İngilizce.
+
+## Mimari
+
+```
+├── src/                   # Frontend (React SPA)
+│   ├── components/        # Paylaşılan bileşenler
+│   │   └── ui/            # shadcn/ui primitifleri (Radix UI)
+│   ├── pages/             # Sayfa bileşenleri (her biri bir rota)
+│   ├── lib/               # Yardımcı fonksiyonlar, context, mock data
+│   └── styles/            # Tailwind CSS giriş dosyası
+├── backend/               # API (Hono + Cloudflare Workers)
+│   └── src/
+│       ├── routes/        # API endpoint'leri
+│       └── services/      # İş mantığı, cache, upstream API client
+├── android/               # Capacitor Android shell
+└── from_designer/         # Tasarımcı referans dosyaları (Next.js, kullanılmıyor)
+```
+
+## Teknoloji Yığını
+
+| Katman | Teknoloji |
+|--------|-----------|
+| Frontend | React 18, Vite 7, TypeScript (strict) |
+| Stil | Tailwind CSS v4, oklch renk sistemi, `tw-animate-css` |
+| UI Bileşenleri | shadcn/ui (Radix UI primitives), Lucide icons |
+| Harita | Leaflet + react-leaflet |
+| Yönlendirme | react-router-dom v6 |
+| Durum Yönetimi | React Context (`TransitProvider`) |
+| Backend | Hono, Cloudflare Workers, KV (cache) |
+| Mobil | Capacitor 8 (Android), compileSdk 36 |
+| Deploy | Cloudflare Pages (frontend), Cloudflare Workers (backend) |
+| Lint/Format | Biome |
+| Dev Ortamı | Devbox (Nix) |
+
+## Geliştirme Kuralları
+
+- Path alias: `@/` → `./src/` (import'larda her zaman `@/` kullan)
+- `cn()` yardımcısı (`@/lib/utils`) ile koşullu class birleştirme
+- Yeni UI bileşenleri `src/components/ui/` altına shadcn/ui formatında
+- Sayfa bileşenleri `src/pages/` altına, dosya adı Türkçe PascalCase (ör. `NasilGiderim.tsx`)
+- URL path'leri kebab-case Türkçe (ör. `/nasil-giderim`, `/dolum-noktalari`)
+- Renkler CSS değişkenleri ile: `--transit-primary`, `--transit-secondary`, `--transit-accent`
+- Dark mode destekleniyor: `.dark` class ile, oklch temelli
+
+## Backend Kuralları
+
+- Cloudflare Workers free tier: **10ms CPU limiti** — her endpoint hafif olmalı
+- KV Cache stratejisi: statik veriler uzun TTL, gerçek zamanlı veriler kısa TTL (10s)
+- Upstream API: `https://ulasim.denizli.bel.tr` — proxy olarak çalışır, cache ekler
+- CORS: wildcard (`*`) — public API
+
+## Devbox (Geliştirme Ortamı)
+
+Bu proje Devbox (Nix) ile yönetiliyor. Terminal komutları çalıştırırken **her zaman önce `devbox shell`** ile ortamı aktif et. Devbox shell'i aktif olmadan `node`, `npm`, `npx`, `gradle`, `java`, `adb` gibi komutlar bulunamayabilir.
+
+```bash
+# Doğru kullanım — önce devbox shell, sonra komut:
+devbox shell
+npm run dev
+
+# Veya tek satırda:
+devbox run dev
+```
+
+`devbox.json` içinde tanımlı scriptler:
+- `devbox run install` → tüm bağımlılıkları kur (frontend + backend)
+- `devbox run dev` → Vite dev server (:3000)
+- `devbox run dev:back` → Wrangler backend dev (:8787)
+- `devbox run dev:all` → frontend + backend birlikte
+- `devbox run build` → frontend production build
+- `devbox run apk` → debug APK oluştur
+- `devbox run apk:rel` → release APK oluştur
+- `devbox run lint` / `format` / `check` → Biome
+
+## Build & Deploy
+
+- `npm run dev` → Vite dev server (:3000), backend'e proxy (:8787)
+- `npm run dev --prefix backend -- --remote` → Wrangler dev (remote mode)
+- `npm run build && npx cap sync android` → web build sonrası Android sync
+- APK: `cd android && ./gradlew assembleDebug`
+- Deploy: Cloudflare Pages (frontend), `wrangler deploy` (backend)

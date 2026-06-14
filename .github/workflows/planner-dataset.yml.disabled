@@ -1,0 +1,139 @@
+name: Refresh Planner Dataset
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: planner-dataset
+  cancel-in-progress: false
+
+jobs:
+  compile-and-publish:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_KV_NAMESPACE_ID: ${{ secrets.CLOUDFLARE_KV_NAMESPACE_ID }}
+      CLOUDFLARE_R2_BUCKET: ${{ secrets.CLOUDFLARE_R2_BUCKET }}
+      UPSTREAM_API: https://ulasim.denizli.bel.tr
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prepare workspace
+        run: mkdir -p .planner/out
+
+      - name: Fetch and normalize upstream data
+        run: npx tsx backend/scripts/planner-ci.ts fetch-normalize --out .planner/snapshot.json --upstream "$UPSTREAM_API"
+
+      - name: Compute source signature
+        run: npx tsx backend/scripts/planner-ci.ts compute-source-signature --snapshot .planner/snapshot.json --out .planner/source-signature.json
+
+      - name: Read current manifest from Cloudflare KV
+        run: |
+          if npx wrangler kv key get --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner:manifest" > .planner/current-manifest.json 2>/dev/null; then
+            if [ ! -s .planner/current-manifest.json ]; then
+              echo '{}' > .planner/current-manifest.json
+            fi
+          else
+            echo '{}' > .planner/current-manifest.json
+          fi
+
+      - name: Check whether compilation is needed
+        id: diff
+        run: |
+          CURRENT_HASH="$(jq -r '.currentSourceSignature.routingHash // empty' .planner/current-manifest.json)"
+          NEXT_HASH="$(jq -r '.routingHash' .planner/source-signature.json)"
+          if [ -n "$CURRENT_HASH" ] && [ "$CURRENT_HASH" = "$NEXT_HASH" ]; then
+            echo "compile_needed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ -n "$CURRENT_HASH" ]; then
+            jq '.currentSourceSignature' .planner/current-manifest.json > .planner/current-source-signature.json
+          fi
+          echo "compile_needed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Compile dataset
+        if: steps.diff.outputs.compile_needed == 'true'
+        run: |
+          if [ -f .planner/current-source-signature.json ]; then
+            npx tsx backend/scripts/planner-ci.ts compile-dataset \
+              --snapshot .planner/snapshot.json \
+              --previous-signature .planner/current-source-signature.json \
+              --out-dir .planner/out
+          else
+            npx tsx backend/scripts/planner-ci.ts compile-dataset \
+              --snapshot .planner/snapshot.json \
+              --out-dir .planner/out
+          fi
+
+      - name: Validate dataset
+        if: steps.diff.outputs.compile_needed == 'true'
+        run: npx tsx backend/scripts/planner-ci.ts validate-dataset --dataset .planner/out/raptor-index.json
+
+      - name: Promote manifest
+        if: steps.diff.outputs.compile_needed == 'true'
+        run: |
+          if [ -s .planner/current-manifest.json ] && [ "$(cat .planner/current-manifest.json)" != "{}" ]; then
+            npx tsx backend/scripts/planner-ci.ts promote-manifest \
+              --current-manifest .planner/current-manifest.json \
+              --compiled-metadata .planner/out/compiled-metadata.json \
+              --out .planner/out/manifest.json
+          else
+            npx tsx backend/scripts/planner-ci.ts promote-manifest \
+              --compiled-metadata .planner/out/compiled-metadata.json \
+              --out .planner/out/manifest.json
+          fi
+
+      - name: Read dataset version
+        if: steps.diff.outputs.compile_needed == 'true'
+        id: dataset
+        run: |
+          DATASET_VERSION="$(jq -r '.datasetVersion' .planner/out/compiled-metadata.json)"
+          echo "dataset_version=$DATASET_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Publish dataset assets to Cloudflare R2
+        if: steps.diff.outputs.compile_needed == 'true' && env.CLOUDFLARE_R2_BUCKET != ''
+        run: |
+          DATASET_VERSION="${{ steps.dataset.outputs.dataset_version }}"
+          npx wrangler r2 object put "$CLOUDFLARE_R2_BUCKET/planner/datasets/$DATASET_VERSION/raptor-index.json" --file .planner/out/raptor-index.json
+          npx wrangler r2 object put "$CLOUDFLARE_R2_BUCKET/planner/datasets/$DATASET_VERSION/build-report.json" --file .planner/out/build-report.json
+          npx wrangler r2 object put "$CLOUDFLARE_R2_BUCKET/planner/datasets/$DATASET_VERSION/source-diff.json" --file .planner/out/source-diff.json
+          npx wrangler r2 object put "$CLOUDFLARE_R2_BUCKET/planner/datasets/$DATASET_VERSION/source-signature.json" --file .planner/out/source-signature.json
+
+      - name: Publish dataset assets to Cloudflare KV
+        if: steps.diff.outputs.compile_needed == 'true'
+        run: |
+          DATASET_VERSION="${{ steps.dataset.outputs.dataset_version }}"
+          npx wrangler kv key put --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner/datasets/$DATASET_VERSION/raptor-index.json" --path .planner/out/raptor-index.json
+          npx wrangler kv key put --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner/datasets/$DATASET_VERSION/build-report.json" --path .planner/out/build-report.json
+          npx wrangler kv key put --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner/datasets/$DATASET_VERSION/source-diff.json" --path .planner/out/source-diff.json
+          npx wrangler kv key put --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner/datasets/$DATASET_VERSION/source-signature.json" --path .planner/out/source-signature.json
+
+      - name: Publish manifest and metadata to Cloudflare KV
+        if: steps.diff.outputs.compile_needed == 'true'
+        run: |
+          DATASET_VERSION="${{ steps.dataset.outputs.dataset_version }}"
+          npx wrangler kv key put --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner:compiled:$DATASET_VERSION" --path .planner/out/compiled-metadata.json
+          npx wrangler kv key put --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner:compiled:latest" "$DATASET_VERSION"
+          npx wrangler kv key put --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner:source-signature:latest" --path .planner/out/source-signature.json
+          npx wrangler kv key put --namespace-id "$CLOUDFLARE_KV_NAMESPACE_ID" "planner:manifest" --path .planner/out/manifest.json
+
+      - name: Upload build artifacts
+        if: steps.diff.outputs.compile_needed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: planner-dataset-${{ steps.dataset.outputs.dataset_version }}
+          path: .planner/out

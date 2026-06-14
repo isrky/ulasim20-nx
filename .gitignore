@@ -1,0 +1,54 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+node_modules
+dist
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+
+# OpenClaude
+.claude/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+!.env.production
+
+# Build cache and tooling
+backend/.wrangler/*
+/.wrangler/
+.openclaude/
+
+# Nix / direnv
+result
+.direnv/
+
+# Generated RAPTOR index
+public/data/raptor-index.json
+
+# Test output
+coverage/
+playwright-report/
+test-results/
+
+# Vite / TypeScript / bundler caches
+.vite/
+*.tsbuildinfo
+.cache/
+.turbo/
+.eslintcache
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+.aider*
+
+# Superpowers brainstrom
+.superpowers/

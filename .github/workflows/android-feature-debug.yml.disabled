@@ -1,0 +1,179 @@
+name: Build Feature Debug APK
+
+# Builds an unsigned debug APK for feature branches and uploads it as a
+# workflow artifact so reviewers can install and test the change on a device.
+# Debug APKs are signed with Android's debug keystore automatically — no
+# signing secrets required.
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'feat/**'
+      - 'fix/**'
+      - 'bugfix/**'
+      - 'chore/**'
+      - 'hotfix/**'
+    paths-ignore:
+      - '**/*.md'
+      - '.github/copilot-instructions.md'
+      - 'from_designer/**'
+      - 'docs/**'
+  pull_request:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - '**/*.md'
+      - '.github/copilot-instructions.md'
+      - 'from_designer/**'
+      - 'docs/**'
+  workflow_dispatch:
+    inputs:
+      backend_url_override:
+        description: 'Override VITE_BACKEND_URL for this build (leave blank to use .env.production)'
+        required: false
+        type: string
+
+# Cancel older in-progress runs for the same branch / PR.
+concurrency:
+  group: feature-debug-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Install Frontend Dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Type Check
+        run: npx tsc --noEmit
+
+      - name: Build Web App
+        env:
+          # Optional workflow_dispatch override. Exported only when non-empty
+          # so we don't clobber VITE_BACKEND_URL from .env.production with ""
+          # (Vite would then pick up the empty value and bake a broken APK).
+          VITE_BACKEND_URL_OVERRIDE: ${{ inputs.backend_url_override }}
+        run: |
+          if [ -n "${VITE_BACKEND_URL_OVERRIDE:-}" ]; then
+            echo "Using override VITE_BACKEND_URL=${VITE_BACKEND_URL_OVERRIDE}"
+            export VITE_BACKEND_URL="${VITE_BACKEND_URL_OVERRIDE}"
+          else
+            echo "No override supplied — relying on .env.production"
+          fi
+          npm run build
+          echo "---- Built-in VITE_BACKEND_URL in dist (sanity check) ----"
+          grep -roh 'https://api\.ulasim20\.com' dist || echo "WARN: no api.ulasim20.com URL found in dist — backend URL was not baked in"
+
+      - name: Sync Capacitor (Android)
+        run: npx cap sync android
+
+      - name: Build Debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Compute Build Metadata
+        id: meta
+        run: |
+          SHA_SHORT=$(git rev-parse --short HEAD)
+          # Sanitize ref name for filenames (slashes → dashes).
+          BRANCH_SAFE=$(echo "${GITHUB_REF_NAME}" | tr '/ ' '--' | tr -cd 'A-Za-z0-9._-')
+          echo "sha_short=${SHA_SHORT}" >> "$GITHUB_OUTPUT"
+          echo "branch_safe=${BRANCH_SAFE}" >> "$GITHUB_OUTPUT"
+          echo "apk_name=ulasim20-${BRANCH_SAFE}-${SHA_SHORT}-debug.apk" >> "$GITHUB_OUTPUT"
+
+      - name: Rename APK
+        run: |
+          SRC="android/app/build/outputs/apk/debug/app-debug.apk"
+          DEST="android/app/build/outputs/apk/debug/${{ steps.meta.outputs.apk_name }}"
+          cp "$SRC" "$DEST"
+          ls -lh "$DEST"
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.meta.outputs.apk_name }}
+          path: android/app/build/outputs/apk/debug/${{ steps.meta.outputs.apk_name }}
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0  # APKs are already compressed (zip).
+
+      - name: Job Summary
+        run: |
+          {
+            echo "### 📦 Debug APK Built"
+            echo ""
+            echo "| Field | Value |"
+            echo "|---|---|"
+            echo "| Branch | \`${GITHUB_REF_NAME}\` |"
+            echo "| Commit | \`${{ steps.meta.outputs.sha_short }}\` |"
+            echo "| Artifact | \`${{ steps.meta.outputs.apk_name }}\` |"
+            echo "| Retention | 14 days |"
+            echo ""
+            echo "Download the APK from the **Artifacts** section at the bottom of this run, then \`adb install\` it on a connected device."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Comment on PR with download link
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const apk = `${{ steps.meta.outputs.apk_name }}`;
+            const body = [
+              '### 📦 Debug APK ready',
+              '',
+              `**Artifact:** \`${apk}\``,
+              `**Run:** ${runUrl}`,
+              '',
+              'Open the run, scroll to **Artifacts**, download the APK, then install with `adb install <file>.apk`.',
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const marker = '### 📦 Debug APK ready';
+            const existing = comments.find(c => c.user.type === 'Bot' && c.body && c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
