@@ -55,3 +55,9 @@ Thumbs.db
 
 # Worktrees
 .worktrees/
+
+# Nx
+.nx/cache
+.nx/workspace-data
+dist/
+tmp/
