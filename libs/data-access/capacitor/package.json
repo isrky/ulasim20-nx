@@ -1,0 +1,16 @@
+{
+  "name": "@ulasim20/data-access-capacitor",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@capacitor/core": "8.0.0",
+    "@capacitor/geolocation": "^8.0.0",
+    "@capacitor/haptics": "8.0.0",
+    "@capacitor/local-notifications": "^8.0.2",
+    "@capacitor/preferences": "8.0.0",
+    "@ulasim20/util-validation": "workspace:*"
+  }
+}
