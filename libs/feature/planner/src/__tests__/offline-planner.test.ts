@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 // The module imports Capacitor + backend helpers at load time. Mock them
 // to keep this pure-logic test hermetic.
-vi.mock('@/lib/capacitor', () => ({
+vi.mock('@ulasim20/data-access-capacitor', () => ({
   getCurrentPosition: vi.fn(),
 }))
 
@@ -11,13 +11,13 @@ vi.mock('@capacitor/core', () => ({
   CapacitorHttp: { get: vi.fn() },
 }))
 
-vi.mock('@/api/denizli', () => ({
+vi.mock('@ulasim20/data-access-transport-api', () => ({
   backendOrigin: () => 'https://backend.test',
   resolveBackendUrl: (p: string) => `https://backend.test${p}`,
   resolveRuntimeUrl: (p: string) => `https://runtime.test${p}`,
 }))
 
-import { toRouteLocationFromStation } from './offline-route-planner'
+import { toRouteLocationFromStation } from '../lib/offline-planner'
 
 describe('toRouteLocationFromStation', () => {
   it('maps a RouteApiStation to a station-kind RouteLocation with a stable id', () => {

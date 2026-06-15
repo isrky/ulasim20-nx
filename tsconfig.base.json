@@ -30,6 +30,7 @@
       "@ulasim20/util-date": ["libs/util/date/src/index.ts"],
       "@ulasim20/util-geo": ["libs/util/geo/src/index.ts"],
       "@ulasim20/util-format": ["libs/util/format/src/index.ts"],
+      "@ulasim20/util-analytics": ["libs/util/analytics/src/index.ts"],
       "@ulasim20/util-validation": ["libs/util/validation/src/index.ts"],
       "@ulasim20/data-access-api-client": ["libs/data-access/api-client/src/index.ts"],
       "@ulasim20/data-access-transport-api": ["libs/data-access/transport-api/src/index.ts"],

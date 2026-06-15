@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   normalizeAnalyticsCardType,
   resolveSavedCardAnalyticsCardType,
-} from '../../src/lib/analytics'
+} from '../index'
 
 describe('normalizeAnalyticsCardType', () => {
   it.each([

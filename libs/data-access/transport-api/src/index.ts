@@ -17,3 +17,5 @@ export class TransportApi {
     return this.client.get<ApiResponse<Vehicle[]>>('/vehicles/live')
   }
 }
+
+export { pb, type FeedbackRecord } from './lib/pocketbase'

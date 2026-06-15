@@ -1,4 +1,4 @@
-import { isNative } from '@/lib/capacitor'
+import { isNative } from '@ulasim20/data-access-capacitor'
 import JSZip from 'jszip'
 
 export type LatLng = [number, number]

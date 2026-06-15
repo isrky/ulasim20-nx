@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import PocketBase, { type RecordModel } from 'pocketbase'
 
 // The PocketBase server URL can be configured via environment variables.

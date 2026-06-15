@@ -6,9 +6,9 @@ import { Input } from '@ulasim20/ui-primitives'
 import { Skeleton } from '@ulasim20/ui-primitives'
 import { useSavedCards } from '@/hooks/use-saved-cards'
 import { useSEO } from '@/hooks/use-seo'
-import { normalizeAnalyticsCardType, trackAnalyticsEvent } from '@/lib/analytics'
-import { openExternalUrl, triggerHaptic } from '@/lib/capacitor'
-import { NfcScanError, isNfcCardScanSupported, scanCardUidOnce } from '@/lib/nfc'
+import { normalizeAnalyticsCardType, trackAnalyticsEvent } from '@ulasim20/util-analytics'
+import { openExternalUrl, triggerHaptic } from '@ulasim20/data-access-capacitor'
+import { NfcScanError, isNfcCardScanSupported, scanCardUidOnce } from '@ulasim20/data-access-capacitor'
 import { ImpactStyle } from '@capacitor/haptics'
 import {
   AlertTriangle,

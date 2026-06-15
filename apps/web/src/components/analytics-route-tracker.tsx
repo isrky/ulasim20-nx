@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import { loadAnalytics, trackAnalyticsPageView } from '@/lib/analytics'
+import { loadAnalytics, trackAnalyticsPageView } from '@ulasim20/util-analytics'
 
 const VALID_ROUTE_PATTERNS = [
   /^\/$/,

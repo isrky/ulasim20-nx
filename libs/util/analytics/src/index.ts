@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 const DEFAULT_UMAMI_SRC = 'https://umami.isrky.dev/script.js'
 const DEFAULT_UMAMI_WEBSITE_ID = '22656b81-a75a-49e5-9145-4acea4b23d12'
 const SCRIPT_ID = 'umami-analytics-script'

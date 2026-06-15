@@ -17,7 +17,7 @@ import {
   installOfflinePlanner,
   toRouteLocationFromStation,
   useCurrentLocation,
-} from '@/lib/offline-route-planner'
+} from '@ulasim20/feature-planner'
 
 export type {
   HealthResponse,

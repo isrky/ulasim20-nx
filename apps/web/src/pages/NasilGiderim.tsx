@@ -24,7 +24,7 @@ import { Input } from '@ulasim20/ui-primitives'
 import { Progress } from '@ulasim20/ui-primitives'
 import { Skeleton } from '@ulasim20/ui-primitives'
 import { useSEO } from '@/hooks/use-seo'
-import { trackAnalyticsEvent, trackStopLookup } from '@/lib/analytics'
+import { trackAnalyticsEvent, trackStopLookup } from '@ulasim20/util-analytics'
 import { TransitProvider } from '@/lib/transit-context'
 import { type POIResult, searchPOI } from '@/utils/geocoding'
 import {

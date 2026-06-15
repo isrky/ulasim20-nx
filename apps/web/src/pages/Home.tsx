@@ -3,7 +3,7 @@ import { DesktopNav, MobileNav } from '@/components/navigation'
 import { Card } from '@ulasim20/ui-primitives'
 import { Input } from '@ulasim20/ui-primitives'
 import { useSEO } from '@/hooks/use-seo'
-import { trackAnalyticsEvent, trackLineLookup, trackStopLookup } from '@/lib/analytics'
+import { trackAnalyticsEvent, trackLineLookup, trackStopLookup } from '@ulasim20/util-analytics'
 import {
   buildRouteIndexes,
   buildStationIndex,

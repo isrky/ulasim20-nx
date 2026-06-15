@@ -1,4 +1,4 @@
-import { NfcScanError } from '@/lib/nfc'
+import { NfcScanError } from '@ulasim20/data-access-capacitor'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -52,24 +52,21 @@ vi.mock('@/hooks/use-saved-cards', () => ({
   }),
 }))
 
-vi.mock('@/lib/capacitor', () => ({
-  triggerHaptic: vi.fn(),
-  openExternalUrl: vi.fn(),
-}))
-
-vi.mock('@/lib/analytics', () => ({
-  normalizeAnalyticsCardType: vi.fn((value) => value || 'unknown'),
-  trackAnalyticsEvent: mocks.trackAnalyticsEvent,
-}))
-
-vi.mock('@/lib/nfc', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/lib/nfc')>()
+vi.mock('@ulasim20/data-access-capacitor', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@ulasim20/data-access-capacitor')>()
   return {
     ...actual,
+    triggerHaptic: vi.fn(),
+    openExternalUrl: vi.fn(),
     isNfcCardScanSupported: mocks.isNfcCardScanSupported,
     scanCardUidOnce: mocks.scanCardUidOnce,
   }
 })
+
+vi.mock('@ulasim20/util-analytics', () => ({
+  normalizeAnalyticsCardType: vi.fn((value) => value || 'unknown'),
+  trackAnalyticsEvent: mocks.trackAnalyticsEvent,
+}))
 
 import KartPage from './Kart'
 

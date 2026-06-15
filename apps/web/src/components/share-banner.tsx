@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import { Card } from '@ulasim20/ui-primitives'
 import { Button } from '@ulasim20/ui-primitives'
 import { Share2, X } from 'lucide-react'
-import { trackAnalyticsEvent } from '@/lib/analytics'
-import { shareContent } from '@/lib/capacitor'
+import { trackAnalyticsEvent } from '@ulasim20/util-analytics'
+import { shareContent } from '@ulasim20/data-access-capacitor'
 
 export function ShareBanner() {
   const [isMinimized, setIsMinimized] = useState(false)

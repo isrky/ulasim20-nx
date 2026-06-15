@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@ulasim20/ui-primitive
 import { useFavoriteLines } from '@/hooks/use-favorite-lines'
 import { useFavorites } from '@/hooks/use-favorites'
 import { useSEO } from '@/hooks/use-seo'
-import { trackLineLookup, trackStopLookup } from '@/lib/analytics'
+import { trackLineLookup, trackStopLookup } from '@ulasim20/util-analytics'
 import { cn } from '@/lib/utils'
 import { cleanLineCode, cleanLineName } from '@/utils/text'
 import { ArrowRight, Bus, Clock, MapPin, Star, Trash2 } from 'lucide-react'

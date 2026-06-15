@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { sanitizeAnalyticsPayload } from '../../src/lib/analytics'
+import { sanitizeAnalyticsPayload } from '../index'
 
 describe('sanitizeAnalyticsPayload', () => {
   it('drops sensitive keys and preserves safe ones (including nested)', () => {

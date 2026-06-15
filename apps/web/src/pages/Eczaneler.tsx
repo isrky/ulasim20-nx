@@ -2,7 +2,7 @@ import { type PharmacyData, type PharmacyResponse, getPharmacies } from '@/api/d
 import { DesktopNav, MobileNav } from '@/components/navigation'
 import { Card } from '@ulasim20/ui-primitives'
 import { useSEO } from '@/hooks/use-seo'
-import { openExternalUrl } from '@/lib/capacitor'
+import { openExternalUrl } from '@ulasim20/data-access-capacitor'
 import { TransitProvider } from '@/lib/transit-context'
 import { AlertCircle, MapPin, Phone } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'

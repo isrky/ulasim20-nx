@@ -1,5 +1,5 @@
-import { trackAnalyticsEvent } from '@/lib/analytics'
-import { triggerHaptic } from '@/lib/capacitor'
+import { trackAnalyticsEvent } from '@ulasim20/util-analytics'
+import { triggerHaptic } from '@ulasim20/data-access-capacitor'
 import type { FavoriteLine } from '@/types/favorites'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 

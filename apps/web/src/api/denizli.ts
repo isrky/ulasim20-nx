@@ -5,7 +5,7 @@
 // - Aynı anda gelen istekler tek network çağrısında birleştirilir.
 // - Backend API ile entegrasyon (opsiyonel)
 
-import { isNative } from '@/lib/capacitor'
+import { isNative } from '@ulasim20/data-access-capacitor'
 import { CapacitorHttp } from '@capacitor/core'
 
 // Absolute origin of the backend Worker, derived from VITE_BACKEND_URL.

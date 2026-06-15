@@ -27,6 +27,7 @@ export default defineWorkspace([
         'libs/util/**/src/**/*.test.ts',
         'libs/types/**/src/**/*.test.ts',
         'libs/data-access/**/src/**/*.test.ts',
+        'libs/feature/planner/src/**/*.test.ts',
         'tests/unit/**/*.test.ts',
         'tests/integration/**/*.test.ts'
       ],

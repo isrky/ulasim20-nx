@@ -1,5 +1,5 @@
-import { backendOrigin, resolveBackendUrl, resolveRuntimeUrl } from '@/api/denizli'
-import { getCurrentPosition } from '@/lib/capacitor'
+import { backendOrigin, resolveBackendUrl, resolveRuntimeUrl } from './runtime-url'
+import { getCurrentPosition } from '@ulasim20/data-access-capacitor'
 import { Capacitor, CapacitorHttp } from '@capacitor/core'
 
 export interface LatLng {
@@ -652,7 +652,8 @@ class MinHeap {
   pop(): { priority: number; stateIndex: number } | undefined {
     if (this.values.length === 0) return undefined
     const first = this.values[0]
-    const last = this.values.pop()!
+    const last = this.values.pop()
+    if (last === undefined) return undefined
     if (this.values.length > 0) {
       this.values[0] = last
       this.bubbleDown(0)
@@ -756,6 +757,7 @@ function buildJourneyFromGoal(
   const journeyStart = timelineEpoch
   let totalWalkingSeconds = 0
   let totalWalkingMeters = 0
+  // biome-ignore lint/correctness/noUnusedVariables: tracked locally for parity with walking totals
   let totalBusSeconds = 0
 
   const firstState = stateSequence[0]
@@ -1121,8 +1123,8 @@ export async function findOfflineRoute(
   }
 
   while (heap.size > 0) {
-    const current = heap.pop()!
-    if (current.priority > distances[current.stateIndex]) continue
+    const current = heap.pop()
+    if (!current || current.priority > distances[current.stateIndex]) continue
 
     const transferCount = current.stateIndex % stride
     const positionIndex = Math.floor(current.stateIndex / stride)

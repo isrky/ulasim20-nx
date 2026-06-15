@@ -226,6 +226,9 @@ importers:
       '@ulasim20/ui-theme':
         specifier: workspace:*
         version: link:../../libs/ui/theme
+      '@ulasim20/util-analytics':
+        specifier: workspace:*
+        version: link:../../libs/util/analytics
       '@ulasim20/util-date':
         specifier: workspace:*
         version: link:../../libs/util/date
@@ -419,6 +422,15 @@ importers:
 
   libs/data-access/capacitor:
     dependencies:
+      '@capacitor/app':
+        specifier: 8.0.0
+        version: 8.0.0(@capacitor/core@8.0.0)
+      '@capacitor/browser':
+        specifier: 8.0.0
+        version: 8.0.0(@capacitor/core@8.0.0)
+      '@capacitor/clipboard':
+        specifier: 8.0.0
+        version: 8.0.0(@capacitor/core@8.0.0)
       '@capacitor/core':
         specifier: 8.0.0
         version: 8.0.0
@@ -428,10 +440,22 @@ importers:
       '@capacitor/haptics':
         specifier: 8.0.0
         version: 8.0.0(@capacitor/core@8.0.0)
+      '@capacitor/keyboard':
+        specifier: 8.0.0
+        version: 8.0.0(@capacitor/core@8.0.0)
       '@capacitor/local-notifications':
         specifier: ^8.0.2
         version: 8.2.0(@capacitor/core@8.0.0)
+      '@capacitor/network':
+        specifier: 8.0.0
+        version: 8.0.0(@capacitor/core@8.0.0)
       '@capacitor/preferences':
+        specifier: 8.0.0
+        version: 8.0.0(@capacitor/core@8.0.0)
+      '@capacitor/share':
+        specifier: 8.0.0
+        version: 8.0.0(@capacitor/core@8.0.0)
+      '@capacitor/status-bar':
         specifier: 8.0.0
         version: 8.0.0(@capacitor/core@8.0.0)
       '@ulasim20/util-validation':
@@ -455,6 +479,13 @@ importers:
       '@ulasim20/types-transport':
         specifier: workspace:*
         version: link:../../types/transport
+      pocketbase:
+        specifier: ^0.26.8
+        version: 0.26.9
+    devDependencies:
+      vite:
+        specifier: ^7.3.2
+        version: 7.3.5(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(tsx@4.22.4)
 
   libs/feature/auth:
     dependencies:
@@ -488,9 +519,22 @@ importers:
 
   libs/feature/planner:
     dependencies:
+      '@capacitor/core':
+        specifier: 8.0.0
+        version: 8.0.0
+      '@ulasim20/data-access-capacitor':
+        specifier: workspace:*
+        version: link:../../data-access/capacitor
       '@ulasim20/types-transport':
         specifier: workspace:*
         version: link:../../types/transport
+      jszip:
+        specifier: ^3.10.1
+        version: 3.10.1
+    devDependencies:
+      vite:
+        specifier: ^7.3.2
+        version: 7.3.5(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(tsx@4.22.4)
 
   libs/feature/routes:
     dependencies:
@@ -711,6 +755,12 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+
+  libs/util/analytics:
+    devDependencies:
+      vite:
+        specifier: ^7.3.2
+        version: 7.3.5(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(tsx@4.22.4)
 
   libs/util/date:
     dependencies:

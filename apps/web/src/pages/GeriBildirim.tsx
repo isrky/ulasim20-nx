@@ -4,7 +4,7 @@ import { Button } from '@ulasim20/ui-primitives'
 import { Card } from '@ulasim20/ui-primitives'
 import { Input } from '@ulasim20/ui-primitives'
 import { useSEO } from '@/hooks/use-seo'
-import { trackAnalyticsEvent } from '@/lib/analytics'
+import { trackAnalyticsEvent } from '@ulasim20/util-analytics'
 import {
   PB_ID_REGEX,
   STORAGE_KEY,
@@ -12,8 +12,8 @@ import {
   feedbackSchema,
   readStoredIds,
   throttleRemainingMs,
-} from '@/lib/feedback-validation'
-import { type FeedbackRecord, pb } from '@/lib/pocketbase'
+} from '@ulasim20/util-validation'
+import { type FeedbackRecord, pb } from '@ulasim20/data-access-transport-api'
 import { TransitProvider } from '@/lib/transit-context'
 import { format } from 'date-fns'
 import { tr } from 'date-fns/locale'

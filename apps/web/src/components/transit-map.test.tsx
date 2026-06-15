@@ -8,7 +8,7 @@ import {
   getRouteGeometryResult,
   triggerRouteGeometryGeneration,
 } from '@/api/denizli'
-import { fetchDirectKmzRouteGeometry } from '@/lib/kmz-route-geometry'
+import { fetchDirectKmzRouteGeometry } from '@ulasim20/feature-planner'
 
 vi.mock('leaflet/dist/leaflet.css', () => ({}))
 vi.mock('leaflet', () => {
@@ -56,10 +56,10 @@ vi.mock('@/api/denizli', () => ({
   getRouteGeometryResult: vi.fn(),
   triggerRouteGeometryGeneration: vi.fn(),
 }))
-vi.mock('@/lib/kmz-route-geometry', () => ({
+vi.mock('@ulasim20/feature-planner', () => ({
   fetchDirectKmzRouteGeometry: vi.fn(),
 }))
-vi.mock('@/lib/analytics', () => ({
+vi.mock('@ulasim20/util-analytics', () => ({
   trackLineLookup: vi.fn(),
   trackRouteMapOpen: vi.fn(),
   trackStopLookup: vi.fn(),

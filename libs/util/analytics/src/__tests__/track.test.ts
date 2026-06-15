@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { trackLineLookup, trackStopLookup } from '../../src/lib/analytics'
-import { installLocalStorageWith, installUmamiWindow } from '../helpers/mockWindow'
+import { installLocalStorageWith, installUmamiWindow } from '../../../../../tests/helpers/mockWindow'
+import { trackLineLookup, trackStopLookup } from '../index'
 
 afterEach(() => {
   // biome-ignore lint/performance/noDelete: clean removal from globalThis in test teardown

@@ -6,7 +6,7 @@ import {
   feedbackSchema,
   readStoredIds,
   throttleRemainingMs,
-} from '../../src/lib/feedback-validation'
+} from './index'
 
 const validBase = {
   type: 'oneri' as const,

@@ -4,9 +4,9 @@ import {
   fetchDirectKmzRouteGeometry,
   parseKmlRouteDirections,
   selectGeometryForLineCode,
-} from './kmz-route-geometry'
+} from '../lib/kmz-geometry'
 
-vi.mock('@/lib/capacitor', () => ({ isNative: false }))
+vi.mock('@ulasim20/data-access-capacitor', () => ({ isNative: false }))
 
 const baseCoordinates = [
   [37.770001, 29.080001],
