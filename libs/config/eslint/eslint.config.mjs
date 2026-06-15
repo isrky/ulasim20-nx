@@ -13,12 +13,9 @@ const boundaryRule = {
         enforceBuildableLibDependency: true,
         allowCircularSelfDependency: false,
         banTransitiveDependencies: true,
-        checkDynamicDependenciesExceptions: ['^node_modules/.*$', '^@ulasim20/.*$'],
+        checkDynamicDependenciesExceptions: ['^node_modules/.*$'],
         allow: [
           '^@/.*$',
-          '^@radix-ui/.*$',
-          '^@capacitor/.*$',
-          '^react(-dom)?$',
           '^\\.\\./.*libs/config/.*$'
         ],
         depConstraints: [
