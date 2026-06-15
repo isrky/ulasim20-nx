@@ -1,0 +1,32 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./libs/types/transport" },
+    { "path": "./libs/types/api" },
+    { "path": "./libs/types/env" },
+    { "path": "./libs/util/date" },
+    { "path": "./libs/util/geo" },
+    { "path": "./libs/util/format" },
+    { "path": "./libs/util/validation" },
+    { "path": "./libs/util/analytics" },
+    { "path": "./libs/util/hooks" },
+    { "path": "./libs/util/search" },
+    { "path": "./libs/data-access/api-client" },
+    { "path": "./libs/data-access/transport-api" },
+    { "path": "./libs/data-access/msw-handlers" },
+    { "path": "./libs/data-access/capacitor" },
+    { "path": "./libs/data-access/mock-data" },
+    { "path": "./libs/ui/primitives" },
+    { "path": "./libs/ui/layout" },
+    { "path": "./libs/ui/map" },
+    { "path": "./libs/ui/page-shell" },
+    { "path": "./libs/ui/icons" },
+    { "path": "./libs/ui/theme" },
+    { "path": "./libs/feature/routes" },
+    { "path": "./libs/feature/planner" },
+    { "path": "./libs/feature/vehicles" },
+    { "path": "./libs/feature/notifications" },
+    { "path": "./libs/feature/auth" },
+    { "path": "./libs/feature/card" }
+  ]
+}

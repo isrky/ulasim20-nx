@@ -1,1 +1,59 @@
-{ "extends": "../../../tsconfig.base.json", "compilerOptions": { "types": ["@testing-library/jest-dom", "vitest/globals"] }, "include": ["src/**/*.ts", "src/**/*.tsx"] }
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "allowImportingTsExtensions": false,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "noEmit": false,
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "types": [
+      "@testing-library/jest-dom",
+      "vitest/globals"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ],
+  "references": [
+    {
+      "path": "../../data-access/capacitor"
+    },
+    {
+      "path": "../../data-access/mock-data"
+    },
+    {
+      "path": "../../data-access/transport-api"
+    },
+    {
+      "path": "../../feature/card"
+    },
+    {
+      "path": "../../feature/planner"
+    },
+    {
+      "path": "../../ui/page-shell"
+    },
+    {
+      "path": "../../ui/primitives"
+    },
+    {
+      "path": "../../util/analytics"
+    },
+    {
+      "path": "../../util/format"
+    },
+    {
+      "path": "../../util/hooks"
+    },
+    {
+      "path": "../../util/search"
+    }
+  ]
+}

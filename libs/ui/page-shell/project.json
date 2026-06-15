@@ -5,8 +5,8 @@
   "projectType": "library",
   "tags": ["type:ui", "scope:shared"],
   "targets": {
-    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/ui/page-shell" } },
-    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/ui/page-shell" } },
+    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/ui/page-shell" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/ui/page-shell" } },
     "lint": { "executor": "nx:run-commands", "options": {
         "commands": [
           "biome lint libs/ui/page-shell",

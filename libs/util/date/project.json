@@ -7,11 +7,11 @@
   "targets": {
     "build": {
       "executor": "nx:run-commands",
-      "options": { "command": "tsc --noEmit -p libs/util/date" }
+      "options": { "command": "tsc --build libs/util/date" }
     },
     "type-check": {
       "executor": "nx:run-commands",
-      "options": { "command": "tsc --noEmit -p libs/util/date" }
+      "options": { "command": "tsc --build libs/util/date" }
     },
     "test": {
       "executor": "nx:run-commands",
