@@ -1,4 +1,4 @@
-import { plugins, server as serverPreset } from '@ulasim20/config-vite'
+import { plugins, server as serverPreset } from '../../libs/config/vite/vite.preset.js'
 import path from 'node:path'
 import { defineConfig } from 'vite'
 

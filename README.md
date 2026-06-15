@@ -30,9 +30,25 @@ pnpm planner:fetch     # nx run backend:planner:fetch-normalize
 
 ## Adding a new lib
 
+Use the workspace generator to create a lib with the right tags, peer deps, and project structure:
+
 ```bash
-pnpm exec nx g @nx/js:lib libs/util/my-util --directory=libs/util/my-util
+pnpm exec nx g @ulasim20/tools:lib --name=my-lib --type=util
 ```
+
+Supported types: `util`, `types`, `data-access`, `ui`, `feature`. The generator places the new lib under `libs/<type>/<name>/`, applies the `type:<type>` and `scope:shared` tags, and adds the React peer/devDeps for `ui` and `feature` libs.
+
+If you create a lib by hand (not via the generator), add `scope:shared` to the `tags` array in `project.json` and add React peer deps to `package.json` for UI/feature libs.
+
+## Nx Cloud
+
+This workspace is configured for Nx Cloud remote caching but is not yet connected. To enable:
+
+```bash
+pnpm exec nx connect
+```
+
+This will set `nxCloudId` in `nx.json` after a human authenticates. If you prefer to keep the ID out of git, set `NX_CLOUD_ACCESS_TOKEN` in your local environment and skip `nx connect`.
 
 ## CI
 
@@ -44,6 +60,7 @@ Required repo secrets:
 
 ## Notes
 
+- Run `pnpm install` locally before pushing so the lockfile is current.
+- `vitest.config.ts` at the repo root is a marker file (its only purpose is to exist for `vitest.workspace.ts` to `extends` it). Do not delete it; `tests/setup/` and the workspace config depend on it.
 - The pre-existing web app has some test files that fail because the React dependency resolution crosses the worktree boundary during local development. The full test suite passes when run in a clean clone.
 - `pnpm-workspace.yaml` uses recursive globs (`apps/**`, `libs/**`) to discover nested workspace packages.
-- The root `vitest.config.ts` is a marker file to prevent vitest's auto-discovery from walking up to the parent repo.

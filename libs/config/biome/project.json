@@ -4,5 +4,16 @@
   "sourceRoot": "libs/config/biome/src",
   "projectType": "library",
   "tags": ["type:config"],
-  "targets": { "lint": { "executor": "nx:run-commands", "options": { "command": "biome lint libs/config/biome" } } }
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "biome lint libs/config/biome",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/config/biome/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      }
+    }
+  }
 }

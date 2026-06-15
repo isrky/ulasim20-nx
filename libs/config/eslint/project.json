@@ -7,7 +7,13 @@
   "targets": {
     "lint": {
       "executor": "nx:run-commands",
-      "options": { "command": "biome lint libs/config/eslint" }
+      "options": {
+        "commands": [
+          "biome lint libs/config/eslint",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/config/eslint/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      }
     }
   }
 }

@@ -1,25 +1,20 @@
 import { Route, Routes } from 'react-router-dom'
 import { AnalyticsRouteTracker } from './components/analytics-route-tracker'
-import { TopBanner } from './components/navigation'
+import { TopBanner } from '@ulasim20/ui-page-shell'
 import { ShareBanner } from './components/share-banner'
+import { useBalanceAutoCheck } from '@ulasim20/feature-card'
 import Bulunamadi from './pages/Bulunamadi'
 import DestekOl from './pages/DestekOl'
 import DolumNoktalari from './pages/DolumNoktalari'
-import DurakDetay from './pages/DurakDetay'
-import Duraklar from './pages/Duraklar'
 import Eczaneler from './pages/Eczaneler'
 import Favoriler from './pages/Favoriler'
 import GeriBildirim from './pages/GeriBildirim'
 import Hakkinda from './pages/Hakkinda'
 import Harita from './pages/Harita'
-import HatDetay from './pages/HatDetay'
-import Hatlar from './pages/Hatlar'
 import Home from './pages/Home'
 import Istatistikler from './pages/Istatistikler'
 import Kart from './pages/Kart'
-import NasilGiderim from './pages/NasilGiderim'
-
-import { useBalanceAutoCheck } from './hooks/use-balance-auto-check'
+import { DurakDetayPage, DuraklarPage, HatDetayPage, HatlarPage, NasilGiderimPage } from '@ulasim20/feature-routes'
 
 function App() {
   useBalanceAutoCheck()
@@ -31,11 +26,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/harita" element={<Harita />} />
-        <Route path="/duraklar" element={<Duraklar />} />
-        <Route path="/duraklar/:id" element={<DurakDetay />} />
-        <Route path="/hatlar" element={<Hatlar />} />
-        <Route path="/hatlar/:id" element={<HatDetay />} />
-        <Route path="/nasil-giderim" element={<NasilGiderim />} />
+        <Route path="/duraklar" element={<DuraklarPage />} />
+        <Route path="/duraklar/:id" element={<DurakDetayPage />} />
+        <Route path="/hatlar" element={<HatlarPage />} />
+        <Route path="/hatlar/:id" element={<HatDetayPage />} />
+        <Route path="/nasil-giderim" element={<NasilGiderimPage />} />
         <Route path="/kart" element={<Kart />} />
         <Route path="/favoriler" element={<Favoriler />} />
         <Route path="/eczaneler" element={<Eczaneler />} />

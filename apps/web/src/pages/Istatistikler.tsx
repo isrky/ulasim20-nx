@@ -1,7 +1,7 @@
-import { DesktopNav, MobileNav } from '@/components/navigation'
-import { Card } from '@/components/ui/card'
-import { useSEO } from '@/hooks/use-seo'
-import { TransitProvider } from '@/lib/transit-context'
+import { DesktopNav, MobileNav } from '@ulasim20/ui-page-shell'
+import { Card } from '@ulasim20/ui-primitives'
+import { useSEO } from '@ulasim20/util-hooks'
+import { TransitProvider } from '@ulasim20/feature-routes'
 import { Calendar, Clock, Map, MessageSquare, Search, Star, TrendingUp, Users } from 'lucide-react'
 
 const stats = {

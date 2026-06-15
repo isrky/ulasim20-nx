@@ -1,11 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "../..",
-    "paths": {
-      "@/*": ["apps/web/src/*"]
-    },
-    "types": ["node", "vitest/globals", "@testing-library/jest-dom", "@cloudflare/workers-types"]
+    "types": ["node", "@testing-library/jest-dom", "@cloudflare/workers-types"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "functions/**/*.ts"]
 }

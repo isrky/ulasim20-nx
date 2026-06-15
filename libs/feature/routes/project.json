@@ -5,8 +5,15 @@
   "projectType": "library",
   "tags": ["type:feature", "scope:shared"],
   "targets": {
-    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/feature/routes" } },
-    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p libs/feature/routes" } },
-    "lint": { "executor": "nx:run-commands", "options": { "command": "biome lint libs/feature/routes" } }
+    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/feature/routes" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/feature/routes" } },
+    "test": { "executor": "nx:run-commands", "options": { "command": "vitest run --project=frontend libs/feature/routes" } },
+    "lint": { "executor": "nx:run-commands", "options": {
+        "commands": [
+          "biome lint libs/feature/routes",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/feature/routes/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      } }
   }
 }

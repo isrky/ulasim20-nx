@@ -1,10 +1,10 @@
-import { DesktopNav, MobileNav } from '@/components/navigation'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { useSEO } from '@/hooks/use-seo'
-import { trackAnalyticsEvent } from '@/lib/analytics'
+import { DesktopNav, MobileNav } from '@ulasim20/ui-page-shell'
+import { Badge } from '@ulasim20/ui-primitives'
+import { Button } from '@ulasim20/ui-primitives'
+import { Card } from '@ulasim20/ui-primitives'
+import { Input } from '@ulasim20/ui-primitives'
+import { useSEO } from '@ulasim20/util-hooks'
+import { trackAnalyticsEvent } from '@ulasim20/util-analytics'
 import {
   PB_ID_REGEX,
   STORAGE_KEY,
@@ -12,9 +12,9 @@ import {
   feedbackSchema,
   readStoredIds,
   throttleRemainingMs,
-} from '@/lib/feedback-validation'
-import { type FeedbackRecord, pb } from '@/lib/pocketbase'
-import { TransitProvider } from '@/lib/transit-context'
+} from '@ulasim20/util-validation'
+import { type FeedbackRecord, pb } from '@ulasim20/data-access-transport-api'
+import { TransitProvider } from '@ulasim20/feature-routes'
 import { format } from 'date-fns'
 import { tr } from 'date-fns/locale'
 import {

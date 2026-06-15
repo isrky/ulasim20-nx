@@ -1,0 +1,31 @@
+{
+  "name": "util-analytics",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/util/analytics/src",
+  "projectType": "library",
+  "tags": ["type:util", "scope:shared"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --build libs/util/analytics" }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --build libs/util/analytics" }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vitest run --project=node libs/util/analytics" }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "biome lint libs/util/analytics",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/util/analytics/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}

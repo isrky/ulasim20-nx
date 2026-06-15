@@ -1,8 +1,8 @@
-import { DesktopNav, MobileNav } from '@/components/navigation'
-import { useSEO } from '@/hooks/use-seo'
+import { DesktopNav, MobileNav } from '@ulasim20/ui-page-shell'
+import { useSEO } from '@ulasim20/util-hooks'
 import { Suspense, lazy } from 'react'
 
-const TransitMap = lazy(() => import('@/components/transit-map'))
+const TransitMap = lazy(() => import('@ulasim20/feature-routes').then((m) => ({ default: m.TransitMap })))
 
 export default function MapPage() {
   useSEO({

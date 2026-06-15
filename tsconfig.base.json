@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@/*": ["apps/web/src/*"],
       "@ulasim20/config-tsconfig": ["libs/config/tsconfig"],
       "@ulasim20/config-eslint": ["libs/config/eslint"],
       "@ulasim20/config-vite": ["libs/config/vite"],
@@ -30,21 +31,28 @@
       "@ulasim20/util-date": ["libs/util/date/src/index.ts"],
       "@ulasim20/util-geo": ["libs/util/geo/src/index.ts"],
       "@ulasim20/util-format": ["libs/util/format/src/index.ts"],
+      "@ulasim20/util-analytics": ["libs/util/analytics/src/index.ts"],
       "@ulasim20/util-validation": ["libs/util/validation/src/index.ts"],
+      "@ulasim20/util-hooks": ["libs/util/hooks/src/index.ts"],
+      "@ulasim20/util-search": ["libs/util/search/src/index.ts"],
       "@ulasim20/data-access-api-client": ["libs/data-access/api-client/src/index.ts"],
       "@ulasim20/data-access-transport-api": ["libs/data-access/transport-api/src/index.ts"],
       "@ulasim20/data-access-msw-handlers": ["libs/data-access/msw-handlers/src/index.ts"],
       "@ulasim20/data-access-capacitor": ["libs/data-access/capacitor/src/index.ts"],
+      "@ulasim20/data-access-mock-data": ["libs/data-access/mock-data/src/index.ts"],
       "@ulasim20/ui-primitives": ["libs/ui/primitives/src/index.ts"],
       "@ulasim20/ui-layout": ["libs/ui/layout/src/index.ts"],
       "@ulasim20/ui-map": ["libs/ui/map/src/index.ts"],
+      "@ulasim20/ui-page-shell": ["libs/ui/page-shell/src/index.ts"],
       "@ulasim20/ui-icons": ["libs/ui/icons/src/index.ts"],
       "@ulasim20/ui-theme": ["libs/ui/theme/src/index.ts"],
       "@ulasim20/feature-routes": ["libs/feature/routes/src/index.ts"],
       "@ulasim20/feature-planner": ["libs/feature/planner/src/index.ts"],
+      "@ulasim20/feature-card": ["libs/feature/card/src/index.ts"],
       "@ulasim20/feature-vehicles": ["libs/feature/vehicles/src/index.ts"],
       "@ulasim20/feature-notifications": ["libs/feature/notifications/src/index.ts"],
-      "@ulasim20/feature-auth": ["libs/feature/auth/src/index.ts"]
+      "@ulasim20/feature-auth": ["libs/feature/auth/src/index.ts"],
+      "@ulasim20/tools": ["tools"]
     }
   }
 }

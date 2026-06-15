@@ -6,6 +6,12 @@
   "main": "src/index.ts",
   "exports": { ".": "./src/index.ts" },
   "dependencies": {
-    "@ulasim20/types-transport": "workspace:*"
+    "@capacitor/core": "8.0.0",
+    "@ulasim20/data-access-capacitor": "workspace:*",
+    "@ulasim20/types-transport": "workspace:*",
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "vite": "^7.3.2"
   }
 }

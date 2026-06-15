@@ -8,7 +8,11 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "biome lint libs/config/tsconfig"
+        "commands": [
+          "biome lint libs/config/tsconfig",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/config/tsconfig/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
       }
     }
   }

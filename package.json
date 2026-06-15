@@ -5,7 +5,8 @@
   "description": "Denizli Ulaşım Portalı — Nx monorepo",
   "packageManager": "pnpm@9.12.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=20",
+    "pnpm": ">=9"
   },
   "scripts": {
     "dev": "pnpm exec nx serve web",
@@ -19,11 +20,11 @@
     "test:e2e": "playwright test",
     "typecheck": "pnpm exec nx run-many -t type-check",
     "lint": "pnpm exec nx run-many -t lint",
-    "lint:fix": "biome lint --write .",
+    "lint:fix": "biome lint --write . && pnpm exec nx run-many -t lint -- --fix",
     "format": "biome format .",
     "format:fix": "biome format --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --write .",
+    "check": "pnpm exec nx run-many -t lint type-check",
+    "check:fix": "pnpm exec nx run-many -t lint -- --write --fix && pnpm exec nx run-many -t lint -- --fix",
     "planner:fetch": "pnpm exec nx run backend:planner:fetch-normalize",
     "planner:signature": "pnpm exec nx run backend:planner:compute-source-signature",
     "planner:compile": "pnpm exec nx run backend:planner:compile-dataset",
@@ -34,12 +35,15 @@
     "@biomejs/biome": "1.9.4",
     "@cloudflare/workers-types": "^4.20241205.0",
     "@nx/eslint": "19.8.0",
+    "@nx/eslint-plugin": "19.8.0",
+    "@nx/devkit": "19.8.0",
     "@nx/js": "19.8.0",
     "@nx/react": "19.8.0",
     "@nx/workspace": "19.8.0",
     "@types/node": "^24.10.0",
     "nx": "19.8.0",
     "typescript": "^5.5.4",
+    "typescript-eslint": "^8.61.0",
     "vitest": "2.1.9"
   }
 }

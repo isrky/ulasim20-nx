@@ -8,7 +8,13 @@
     "build": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter backend build" } },
     "dev": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter backend dev" } },
     "test": { "executor": "nx:run-commands", "options": { "command": "vitest run", "cwd": "apps/backend" } },
-    "lint": { "executor": "nx:run-commands", "options": { "command": "biome lint apps/backend" } },
+    "lint": { "executor": "nx:run-commands", "options": {
+        "commands": [
+          "biome lint apps/backend",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'apps/backend/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      } },
     "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --noEmit -p apps/backend/tsconfig.json" } },
     "deploy": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter backend deploy" } },
     "planner:fetch-normalize": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter backend planner:fetch-normalize" } },
