@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "ulasim20-lib",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Library name (kebab-case)",
+      "pattern": "^[a-z][a-z0-9-]+$"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["util", "types", "data-access", "ui", "feature"]
+    }
+  },
+  "required": ["name", "type"]
+}

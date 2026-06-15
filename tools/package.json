@@ -1,0 +1,7 @@
+{
+  "name": "@ulasim20/tools",
+  "version": "0.0.1",
+  "private": true,
+  "main": "generators/lib/index.ts",
+  "generators": "./generators.json"
+}

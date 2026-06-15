@@ -27,6 +27,7 @@
     { "path": "./libs/feature/vehicles" },
     { "path": "./libs/feature/notifications" },
     { "path": "./libs/feature/auth" },
-    { "path": "./libs/feature/card" }
+    { "path": "./libs/feature/card" },
+    { "path": "./tools" }
   ]
 }

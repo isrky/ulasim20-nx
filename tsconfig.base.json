@@ -51,7 +51,8 @@
       "@ulasim20/feature-card": ["libs/feature/card/src/index.ts"],
       "@ulasim20/feature-vehicles": ["libs/feature/vehicles/src/index.ts"],
       "@ulasim20/feature-notifications": ["libs/feature/notifications/src/index.ts"],
-      "@ulasim20/feature-auth": ["libs/feature/auth/src/index.ts"]
+      "@ulasim20/feature-auth": ["libs/feature/auth/src/index.ts"],
+      "@ulasim20/tools": ["tools"]
     }
   }
 }
