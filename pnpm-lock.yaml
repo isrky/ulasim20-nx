@@ -178,78 +178,33 @@ importers:
       '@tmcw/togeojson':
         specifier: ^7.1.2
         version: 7.1.2
-      '@ulasim20/data-access-api-client':
-        specifier: workspace:*
-        version: link:../../libs/data-access/api-client
       '@ulasim20/data-access-capacitor':
         specifier: workspace:*
         version: link:../../libs/data-access/capacitor
       '@ulasim20/data-access-mock-data':
         specifier: workspace:*
         version: link:../../libs/data-access/mock-data
-      '@ulasim20/data-access-msw-handlers':
-        specifier: workspace:*
-        version: link:../../libs/data-access/msw-handlers
       '@ulasim20/data-access-transport-api':
         specifier: workspace:*
         version: link:../../libs/data-access/transport-api
-      '@ulasim20/feature-auth':
-        specifier: workspace:*
-        version: link:../../libs/feature/auth
       '@ulasim20/feature-card':
         specifier: workspace:*
         version: link:../../libs/feature/card
-      '@ulasim20/feature-notifications':
-        specifier: workspace:*
-        version: link:../../libs/feature/notifications
-      '@ulasim20/feature-planner':
-        specifier: workspace:*
-        version: link:../../libs/feature/planner
       '@ulasim20/feature-routes':
         specifier: workspace:*
         version: link:../../libs/feature/routes
-      '@ulasim20/feature-vehicles':
-        specifier: workspace:*
-        version: link:../../libs/feature/vehicles
-      '@ulasim20/types-api':
-        specifier: workspace:*
-        version: link:../../libs/types/api
-      '@ulasim20/types-env':
-        specifier: workspace:*
-        version: link:../../libs/types/env
-      '@ulasim20/types-transport':
-        specifier: workspace:*
-        version: link:../../libs/types/transport
-      '@ulasim20/ui-icons':
-        specifier: workspace:*
-        version: link:../../libs/ui/icons
-      '@ulasim20/ui-layout':
-        specifier: workspace:*
-        version: link:../../libs/ui/layout
-      '@ulasim20/ui-map':
-        specifier: workspace:*
-        version: link:../../libs/ui/map
       '@ulasim20/ui-page-shell':
         specifier: workspace:*
         version: link:../../libs/ui/page-shell
       '@ulasim20/ui-primitives':
         specifier: workspace:*
         version: link:../../libs/ui/primitives
-      '@ulasim20/ui-theme':
-        specifier: workspace:*
-        version: link:../../libs/ui/theme
       '@ulasim20/util-analytics':
         specifier: workspace:*
         version: link:../../libs/util/analytics
-      '@ulasim20/util-date':
-        specifier: workspace:*
-        version: link:../../libs/util/date
       '@ulasim20/util-format':
         specifier: workspace:*
         version: link:../../libs/util/format
-      '@ulasim20/util-geo':
-        specifier: workspace:*
-        version: link:../../libs/util/geo
       '@ulasim20/util-hooks':
         specifier: workspace:*
         version: link:../../libs/util/hooks
@@ -677,7 +632,7 @@ importers:
         version: 0.552.0(react@19.2.7)
 
   libs/ui/layout:
-    dependencies:
+    devDependencies:
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -690,15 +645,16 @@ importers:
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
+      react-leaflet:
+        specifier: ^4.2.1
+        version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    devDependencies:
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-leaflet:
-        specifier: ^4.2.1
-        version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   libs/ui/page-shell:
     dependencies:
