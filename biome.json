@@ -161,6 +161,60 @@
           }
         }
       }
+    },
+    {
+      "include": ["libs/ui/page-shell/src/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useSemanticElements": "warn",
+            "useFocusableInteractive": "warn",
+            "noLabelWithoutControl": "warn",
+            "useKeyWithClickEvents": "off",
+            "useButtonType": "off",
+            "noSvgWithoutTitle": "warn",
+            "noBlankTarget": "warn"
+          },
+          "style": { "noNonNullAssertion": "warn" },
+          "correctness": {
+            "useExhaustiveDependencies": "warn",
+            "noUnusedVariables": "warn"
+          },
+          "suspicious": {
+            "noArrayIndexKey": "warn",
+            "noShadowRestrictedNames": "warn"
+          }
+        }
+      }
+    },
+    {
+      "include": ["libs/feature/routes/src/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useSemanticElements": "warn",
+            "useFocusableInteractive": "warn",
+            "noLabelWithoutControl": "warn",
+            "useKeyWithClickEvents": "off",
+            "useButtonType": "off",
+            "noSvgWithoutTitle": "warn",
+            "noBlankTarget": "warn"
+          },
+          "style": { "noNonNullAssertion": "warn" },
+          "correctness": {
+            "useExhaustiveDependencies": "warn",
+            "noUnusedVariables": "warn"
+          },
+          "suspicious": {
+            "noArrayIndexKey": "warn",
+            "noShadowRestrictedNames": "warn",
+            "noExplicitAny": "warn"
+          },
+          "complexity": {
+            "noForEach": "warn"
+          }
+        }
+      }
     }
   ]
 }

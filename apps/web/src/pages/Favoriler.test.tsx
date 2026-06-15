@@ -34,21 +34,18 @@ const mocks = vi.hoisted(() => ({
   })),
 }))
 
-vi.mock('@/hooks/use-favorites', () => ({
+vi.mock('@ulasim20/feature-card', () => ({
   useFavorites: mocks.useFavorites,
-}))
-
-vi.mock('@/hooks/use-favorite-lines', () => ({
   useFavoriteLines: mocks.useFavoriteLines,
 }))
 
 // Mock API and analytics to prevent side effects
-vi.mock('@/api/denizli', () => ({
+vi.mock('@ulasim20/data-access-transport-api', () => ({
   getBusDataForStation: vi.fn(() => Promise.resolve({ value: { busList: [] } })),
   apiGet: vi.fn(() => Promise.resolve({ value: [] })),
 }))
 
-vi.mock('@/lib/analytics', () => ({
+vi.mock('@ulasim20/util-analytics', () => ({
   trackLineLookup: vi.fn(),
   trackStopLookup: vi.fn(),
 }))

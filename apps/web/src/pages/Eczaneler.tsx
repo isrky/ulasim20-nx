@@ -1,9 +1,9 @@
-import { type PharmacyData, type PharmacyResponse, getPharmacies } from '@/api/denizli'
-import { DesktopNav, MobileNav } from '@/components/navigation'
+import { type PharmacyData, type PharmacyResponse, getPharmacies } from '@ulasim20/data-access-transport-api'
+import { DesktopNav, MobileNav } from '@ulasim20/ui-page-shell'
 import { Card } from '@ulasim20/ui-primitives'
-import { useSEO } from '@/hooks/use-seo'
+import { useSEO } from '@ulasim20/util-hooks'
 import { openExternalUrl } from '@ulasim20/data-access-capacitor'
-import { TransitProvider } from '@/lib/transit-context'
+import { TransitProvider } from '@ulasim20/feature-routes'
 import { AlertCircle, MapPin, Phone } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 

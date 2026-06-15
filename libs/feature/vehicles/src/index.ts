@@ -1,2 +1,2 @@
-export { useLiveVehicles } from './lib/use-live-vehicles'
-export { VehiclesLayer } from './lib/vehicles-layer'
+// Reserved for future scope. See docs/superpowers/specs/2026-06-14-nx-monorepo-design.md#libslayout.
+export {};

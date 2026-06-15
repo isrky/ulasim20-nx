@@ -33,16 +33,16 @@ const mocks = vi.hoisted(() => ({
   trackAnalyticsEvent: vi.fn(),
 }))
 
-vi.mock('@/api/denizli', () => ({
+vi.mock('@ulasim20/data-access-transport-api', () => ({
   apiGet: mocks.apiGet,
 }))
 
-vi.mock('@/components/navigation', () => ({
+vi.mock('@ulasim20/ui-page-shell', () => ({
   DesktopNav: () => null,
   MobileNav: () => null,
 }))
 
-vi.mock('@/hooks/use-saved-cards', () => ({
+vi.mock('@ulasim20/feature-card', () => ({
   useSavedCards: () => ({
     cards: [],
     isSaved: mocks.isSaved,

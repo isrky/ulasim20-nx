@@ -25,7 +25,7 @@ const boundaryRule = {
           { sourceTag: 'scope:web', onlyDependOnLibsWithTags: ['scope:web', 'scope:shared'] },
           { sourceTag: 'scope:backend', onlyDependOnLibsWithTags: ['scope:backend', 'scope:shared'] },
           { sourceTag: 'scope:mobile', onlyDependOnLibsWithTags: ['scope:mobile', 'scope:shared'] },
-          { sourceTag: 'type:feature', onlyDependOnLibsWithTags: ['type:ui', 'type:data-access', 'type:util', 'type:types'] },
+          { sourceTag: 'type:feature', onlyDependOnLibsWithTags: ['type:feature', 'type:ui', 'type:data-access', 'type:util', 'type:types'] },
           { sourceTag: 'type:ui', onlyDependOnLibsWithTags: ['type:util', 'type:types'] },
           { sourceTag: 'type:data-access', onlyDependOnLibsWithTags: ['type:data-access', 'type:util', 'type:types'] },
           { sourceTag: 'type:util', onlyDependOnLibsWithTags: ['type:types'] },

@@ -1,16 +1,16 @@
-import { type BusRoute, type Station, getAllRoutes, getAllStations } from '@/api/denizli'
-import { DesktopNav, MobileNav } from '@/components/navigation'
+import { type BusRoute, type Station, getAllRoutes, getAllStations } from '@ulasim20/data-access-transport-api'
+import { DesktopNav, MobileNav } from '@ulasim20/ui-page-shell'
 import { Card } from '@ulasim20/ui-primitives'
 import { Input } from '@ulasim20/ui-primitives'
-import { useSEO } from '@/hooks/use-seo'
+import { useSEO } from '@ulasim20/util-hooks'
 import { trackAnalyticsEvent, trackLineLookup, trackStopLookup } from '@ulasim20/util-analytics'
+import { cleanLineCode, cleanLineName } from '@ulasim20/util-format'
 import {
   buildRouteIndexes,
   buildStationIndex,
   searchBusRoutes,
   searchStations,
-} from '@/utils/search'
-import { cleanLineCode, cleanLineName } from '@/utils/text'
+} from '@ulasim20/util-search'
 import { ArrowRight, Bus, MapPin, Navigation, Search, Star } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'

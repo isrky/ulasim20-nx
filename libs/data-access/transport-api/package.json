@@ -7,6 +7,7 @@
   "exports": { ".": "./src/index.ts" },
   "dependencies": {
     "@ulasim20/data-access-api-client": "workspace:*",
+    "@ulasim20/data-access-capacitor": "workspace:*",
     "@ulasim20/types-transport": "workspace:*",
     "@ulasim20/types-api": "workspace:*",
     "pocketbase": "^0.26.8"

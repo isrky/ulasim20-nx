@@ -181,6 +181,9 @@ importers:
       '@ulasim20/data-access-capacitor':
         specifier: workspace:*
         version: link:../../libs/data-access/capacitor
+      '@ulasim20/data-access-mock-data':
+        specifier: workspace:*
+        version: link:../../libs/data-access/mock-data
       '@ulasim20/data-access-msw-handlers':
         specifier: workspace:*
         version: link:../../libs/data-access/msw-handlers
@@ -190,6 +193,9 @@ importers:
       '@ulasim20/feature-auth':
         specifier: workspace:*
         version: link:../../libs/feature/auth
+      '@ulasim20/feature-card':
+        specifier: workspace:*
+        version: link:../../libs/feature/card
       '@ulasim20/feature-notifications':
         specifier: workspace:*
         version: link:../../libs/feature/notifications
@@ -220,6 +226,9 @@ importers:
       '@ulasim20/ui-map':
         specifier: workspace:*
         version: link:../../libs/ui/map
+      '@ulasim20/ui-page-shell':
+        specifier: workspace:*
+        version: link:../../libs/ui/page-shell
       '@ulasim20/ui-primitives':
         specifier: workspace:*
         version: link:../../libs/ui/primitives
@@ -238,6 +247,12 @@ importers:
       '@ulasim20/util-geo':
         specifier: workspace:*
         version: link:../../libs/util/geo
+      '@ulasim20/util-hooks':
+        specifier: workspace:*
+        version: link:../../libs/util/hooks
+      '@ulasim20/util-search':
+        specifier: workspace:*
+        version: link:../../libs/util/search
       '@ulasim20/util-validation':
         specifier: workspace:*
         version: link:../../libs/util/validation
@@ -462,6 +477,8 @@ importers:
         specifier: workspace:*
         version: link:../../util/validation
 
+  libs/data-access/mock-data: {}
+
   libs/data-access/msw-handlers:
     dependencies:
       msw:
@@ -473,6 +490,9 @@ importers:
       '@ulasim20/data-access-api-client':
         specifier: workspace:*
         version: link:../api-client
+      '@ulasim20/data-access-capacitor':
+        specifier: workspace:*
+        version: link:../capacitor
       '@ulasim20/types-api':
         specifier: workspace:*
         version: link:../../types/api
@@ -488,13 +508,32 @@ importers:
         version: 7.3.5(@types/node@25.9.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(tsx@4.22.4)
 
   libs/feature/auth:
+    devDependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+
+  libs/feature/card:
     dependencies:
-      '@ulasim20/util-validation':
+      '@capacitor/app':
+        specifier: 8.0.0
+        version: 8.0.0(@capacitor/core@8.0.0)
+      '@capacitor/local-notifications':
+        specifier: ^8.0.2
+        version: 8.2.0(@capacitor/core@8.0.0)
+      '@ulasim20/data-access-capacitor':
         specifier: workspace:*
-        version: link:../../util/validation
-      pocketbase:
-        specifier: ^0.26.8
-        version: 0.26.9
+        version: link:../../data-access/capacitor
+      '@ulasim20/data-access-transport-api':
+        specifier: workspace:*
+        version: link:../../data-access/transport-api
+      '@ulasim20/util-analytics':
+        specifier: workspace:*
+        version: link:../../util/analytics
+    devDependencies:
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -503,19 +542,13 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   libs/feature/notifications:
-    dependencies:
-      '@ulasim20/data-access-capacitor':
-        specifier: workspace:*
-        version: link:../../data-access/capacitor
+    devDependencies:
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      sonner:
-        specifier: ^2.0.7
-        version: 2.0.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   libs/feature/planner:
     dependencies:
@@ -538,9 +571,27 @@ importers:
 
   libs/feature/routes:
     dependencies:
+      '@capacitor/core':
+        specifier: 8.0.0
+        version: 8.0.0
+      '@tanstack/react-virtual':
+        specifier: ^3.13.23
+        version: 3.14.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@ulasim20/data-access-capacitor':
+        specifier: workspace:*
+        version: link:../../data-access/capacitor
+      '@ulasim20/data-access-mock-data':
+        specifier: workspace:*
+        version: link:../../data-access/mock-data
       '@ulasim20/data-access-transport-api':
         specifier: workspace:*
         version: link:../../data-access/transport-api
+      '@ulasim20/feature-card':
+        specifier: workspace:*
+        version: link:../card
+      '@ulasim20/feature-planner':
+        specifier: workspace:*
+        version: link:../planner
       '@ulasim20/types-api':
         specifier: workspace:*
         version: link:../../types/api
@@ -550,6 +601,46 @@ importers:
       '@ulasim20/ui-map':
         specifier: workspace:*
         version: link:../../ui/map
+      '@ulasim20/ui-page-shell':
+        specifier: workspace:*
+        version: link:../../ui/page-shell
+      '@ulasim20/ui-primitives':
+        specifier: workspace:*
+        version: link:../../ui/primitives
+      '@ulasim20/util-analytics':
+        specifier: workspace:*
+        version: link:../../util/analytics
+      '@ulasim20/util-format':
+        specifier: workspace:*
+        version: link:../../util/format
+      '@ulasim20/util-hooks':
+        specifier: workspace:*
+        version: link:../../util/hooks
+      '@ulasim20/util-search':
+        specifier: workspace:*
+        version: link:../../util/search
+      leaflet:
+        specifier: ^1.9.4
+        version: 1.9.4
+      lucide-react:
+        specifier: ^0.552.0
+        version: 0.552.0(react@18.3.1)
+      react-leaflet:
+        specifier: ^4.2.1
+        version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-router-dom:
+        specifier: ^6.30.3
+        version: 6.30.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      '@types/leaflet':
+        specifier: ^1.9.21
+        version: 1.9.21
+      '@types/react':
+        specifier: ^18.3.5
+        version: 18.3.31
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.7(@types/react@18.3.31)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -558,16 +649,7 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   libs/feature/vehicles:
-    dependencies:
-      '@ulasim20/data-access-transport-api':
-        specifier: workspace:*
-        version: link:../../data-access/transport-api
-      '@ulasim20/types-transport':
-        specifier: workspace:*
-        version: link:../../types/transport
-      '@ulasim20/ui-map':
-        specifier: workspace:*
-        version: link:../../ui/map
+    devDependencies:
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -614,6 +696,28 @@ importers:
       react-leaflet:
         specifier: ^4.2.1
         version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
+  libs/ui/page-shell:
+    dependencies:
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: ^0.552.0
+        version: 0.552.0(react@18.3.1)
+      react-router-dom:
+        specifier: ^6.30.3
+        version: 6.30.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      tailwind-merge:
+        specifier: ^3.3.1
+        version: 3.6.0
+    devDependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
 
   libs/ui/primitives:
     devDependencies:
@@ -771,6 +875,17 @@ importers:
   libs/util/format: {}
 
   libs/util/geo: {}
+
+  libs/util/hooks:
+    devDependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+
+  libs/util/search: {}
 
   libs/util/validation:
     dependencies:

@@ -10,17 +10,17 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 const getOne = vi.fn()
 const create = vi.fn()
 
-vi.mock('@/lib/pocketbase', () => ({
+vi.mock('@ulasim20/data-access-transport-api', () => ({
   pb: {
     collection: () => ({ getOne, create }),
   },
 }))
 
-vi.mock('@/lib/analytics', () => ({
+vi.mock('@ulasim20/util-analytics', () => ({
   trackAnalyticsEvent: vi.fn(),
 }))
 
-vi.mock('@/components/navigation', () => ({
+vi.mock('@ulasim20/ui-page-shell', () => ({
   DesktopNav: () => null,
   MobileNav: () => null,
 }))

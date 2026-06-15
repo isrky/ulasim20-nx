@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('@/components/navigation', () => ({
+vi.mock('@ulasim20/ui-page-shell', () => ({
   DesktopNav: () => null,
   MobileNav: () => null,
 }))

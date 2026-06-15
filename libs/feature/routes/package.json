@@ -6,10 +6,33 @@
   "main": "src/index.ts",
   "exports": { ".": "./src/index.ts" },
   "dependencies": {
+    "@capacitor/core": "8.0.0",
+    "@tanstack/react-virtual": "^3.13.23",
+    "@ulasim20/data-access-capacitor": "workspace:*",
+    "@ulasim20/data-access-mock-data": "workspace:*",
     "@ulasim20/data-access-transport-api": "workspace:*",
-    "@ulasim20/types-transport": "workspace:*",
+    "@ulasim20/feature-card": "workspace:*",
+    "@ulasim20/feature-planner": "workspace:*",
     "@ulasim20/types-api": "workspace:*",
-    "@ulasim20/ui-map": "workspace:*"
+    "@ulasim20/types-transport": "workspace:*",
+    "@ulasim20/ui-map": "workspace:*",
+    "@ulasim20/ui-page-shell": "workspace:*",
+    "@ulasim20/ui-primitives": "workspace:*",
+    "@ulasim20/util-analytics": "workspace:*",
+    "@ulasim20/util-format": "workspace:*",
+    "@ulasim20/util-hooks": "workspace:*",
+    "@ulasim20/util-search": "workspace:*",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.552.0",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^6.30.3"
   },
-  "peerDependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" }
+  "peerDependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.21",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
 }

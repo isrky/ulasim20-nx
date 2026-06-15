@@ -5,9 +5,9 @@
   "type": "module",
   "main": "src/index.ts",
   "exports": { ".": "./src/index.ts" },
-  "dependencies": {
-    "@ulasim20/data-access-capacitor": "workspace:*",
-    "sonner": "^2.0.7"
-  },
-  "peerDependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" }
+  "peerDependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" },
+  "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
 }

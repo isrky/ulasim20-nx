@@ -30,3 +30,19 @@ export {
   parseKmlRouteDirections,
   selectGeometryForLineCode,
 } from './lib/kmz-geometry'
+export {
+  RouteApiRequestError,
+  checkHealth,
+  downloadPlannerDataset,
+  findRoute,
+  formatMinutes,
+  formatSeconds,
+  getAllRouteApiStations,
+  getCurrentLocationOption,
+  getPlannerStatus,
+  matchStation,
+  resetPlannerDataset,
+  routeLocationFromStation,
+  turkishUpper,
+} from './lib/route-api'
+export type { RouteApiError } from './lib/route-api'

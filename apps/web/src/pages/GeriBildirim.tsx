@@ -1,9 +1,9 @@
-import { DesktopNav, MobileNav } from '@/components/navigation'
+import { DesktopNav, MobileNav } from '@ulasim20/ui-page-shell'
 import { Badge } from '@ulasim20/ui-primitives'
 import { Button } from '@ulasim20/ui-primitives'
 import { Card } from '@ulasim20/ui-primitives'
 import { Input } from '@ulasim20/ui-primitives'
-import { useSEO } from '@/hooks/use-seo'
+import { useSEO } from '@ulasim20/util-hooks'
 import { trackAnalyticsEvent } from '@ulasim20/util-analytics'
 import {
   PB_ID_REGEX,
@@ -14,7 +14,7 @@ import {
   throttleRemainingMs,
 } from '@ulasim20/util-validation'
 import { type FeedbackRecord, pb } from '@ulasim20/data-access-transport-api'
-import { TransitProvider } from '@/lib/transit-context'
+import { TransitProvider } from '@ulasim20/feature-routes'
 import { format } from 'date-fns'
 import { tr } from 'date-fns/locale'
 import {
