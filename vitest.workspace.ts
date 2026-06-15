@@ -8,6 +8,7 @@ const testsAlias = {
 export default defineWorkspace([
   {
     resolve: {
+      dedupe: ['react', 'react-dom'],
       alias: {
         '@': path.resolve(__dirname, 'apps/web/src'),
         ...testsAlias
