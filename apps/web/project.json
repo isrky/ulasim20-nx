@@ -32,9 +32,15 @@
       "executor": "nx:run-commands",
       "options": { "command": "tsc --noEmit -p apps/web/tsconfig.json" }
     },
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": { "command": "playwright test" },
+      "dependsOn": ["^build"]
+    },
     "deploy": {
       "executor": "nx:run-commands",
-      "options": { "command": "wrangler pages deploy apps/web/dist" }
+      "options": { "command": "wrangler pages deploy apps/web/dist" },
+      "dependsOn": ["build", "e2e"]
     }
   }
 }
