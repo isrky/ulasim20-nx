@@ -33,7 +33,7 @@ jobs:
         run: git branch main origin/main || true
 
       - name: Lint, type-check, test, build (affected)
-        run: pnpm exec nx affected -t lint type-check test build --parallel=2 --ci
+        run: pnpm exec nx affected -t lint type-check test build --parallel=2
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
