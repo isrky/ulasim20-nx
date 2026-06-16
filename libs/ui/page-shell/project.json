@@ -1,0 +1,18 @@
+{
+  "name": "ui-page-shell",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/page-shell/src",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:shared"],
+  "targets": {
+    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/ui/page-shell" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/ui/page-shell" } },
+    "lint": { "executor": "nx:run-commands", "options": {
+        "commands": [
+          "biome lint libs/ui/page-shell",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/ui/page-shell/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      } }
+  }
+}

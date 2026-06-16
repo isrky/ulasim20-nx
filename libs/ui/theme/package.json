@@ -1,0 +1,14 @@
+{
+  "name": "@ulasim20/ui-theme",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "next-themes": "^0.4.6" },
+  "peerDependencies": { "react": "^18.3.1" },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "react": "^18.3.1"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "config-tailwind",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/config/tailwind/src",
+  "projectType": "library",
+  "tags": ["type:config"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "biome lint libs/config/tailwind",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/config/tailwind/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}

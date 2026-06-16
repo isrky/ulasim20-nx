@@ -1,0 +1,18 @@
+{
+  "name": "ui-icons",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/icons/src",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:shared"],
+  "targets": {
+    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/ui/icons" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/ui/icons" } },
+    "lint": { "executor": "nx:run-commands", "options": {
+        "commands": [
+          "biome lint libs/ui/icons",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/ui/icons/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      } }
+  }
+}

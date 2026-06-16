@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node", "@testing-library/jest-dom", "@cloudflare/workers-types"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "functions/**/*.ts"]
+}

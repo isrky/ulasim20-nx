@@ -1,0 +1,18 @@
+{
+  "name": "feature-vehicles",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/feature/vehicles/src",
+  "projectType": "library",
+  "tags": ["type:feature", "scope:shared"],
+  "targets": {
+    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/feature/vehicles" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/feature/vehicles" } },
+    "lint": { "executor": "nx:run-commands", "options": {
+        "commands": [
+          "biome lint libs/feature/vehicles",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/feature/vehicles/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      } }
+  }
+}

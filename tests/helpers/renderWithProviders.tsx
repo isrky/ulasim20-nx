@@ -1,4 +1,4 @@
-import { TransitProvider } from '@/lib/transit-context'
+import { TransitProvider } from '@ulasim20/feature-routes'
 import { type RenderOptions, type RenderResult, render } from '@testing-library/react'
 import type { ReactElement, ReactNode } from 'react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'

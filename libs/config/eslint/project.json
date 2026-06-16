@@ -1,0 +1,19 @@
+{
+  "name": "config-eslint",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/config/eslint/src",
+  "projectType": "library",
+  "tags": ["type:config"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "biome lint libs/config/eslint",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/config/eslint/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}

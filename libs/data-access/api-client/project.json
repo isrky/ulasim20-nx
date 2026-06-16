@@ -1,0 +1,19 @@
+{
+  "name": "data-access-api-client",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/data-access/api-client/src",
+  "projectType": "library",
+  "tags": ["type:data-access", "scope:shared"],
+  "targets": {
+    "build": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/data-access/api-client" } },
+    "type-check": { "executor": "nx:run-commands", "options": { "command": "tsc --build libs/data-access/api-client" } },
+    "test": { "executor": "nx:run-commands", "options": { "command": "vitest run --project=node libs/data-access/api-client" } },
+    "lint": { "executor": "nx:run-commands", "options": {
+        "commands": [
+          "biome lint libs/data-access/api-client",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/data-access/api-client/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      } }
+  }
+}

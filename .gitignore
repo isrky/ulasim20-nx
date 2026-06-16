@@ -52,3 +52,12 @@ Thumbs.db
 
 # Superpowers brainstrom
 .superpowers/
+
+# Worktrees
+.worktrees/
+
+# Nx
+.nx/cache
+.nx/workspace-data
+dist/
+tmp/

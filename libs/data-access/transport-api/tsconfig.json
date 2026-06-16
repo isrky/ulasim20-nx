@@ -1,0 +1,19 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "allowImportingTsExtensions": false,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "noEmit": false,
+    "tsBuildInfoFile": "./.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    { "path": "../../data-access/api-client" },
+    { "path": "../../data-access/capacitor" },
+    { "path": "../../types/api" },
+    { "path": "../../types/transport" }
+  ]
+}

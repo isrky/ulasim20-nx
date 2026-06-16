@@ -1,0 +1,31 @@
+{
+  "name": "util-format",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/util/format/src",
+  "projectType": "library",
+  "tags": ["type:util", "scope:shared"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --build libs/util/format" }
+    },
+    "type-check": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --build libs/util/format" }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vitest run --project=node libs/util/format" }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "biome lint libs/util/format",
+          "eslint --config libs/config/eslint/eslint.config.mjs --no-warn-ignored 'libs/util/format/**/*.{ts,tsx,js,jsx}'"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}

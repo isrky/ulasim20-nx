@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "lib": {
+      "factory": "./generators/lib/index",
+      "schema": "./generators/lib/schema.json",
+      "description": "Scaffold a new ulasim20 library under libs/<type>/<name> with workspace conventions."
+    }
+  }
+}
