@@ -39,6 +39,8 @@ export default defineWorkspace([
       name: 'node',
       environment: 'node',
       include: [
+        'libs/data-access/**/src/**/*.test.ts',
+        'libs/data-access/**/src/__tests__/**/*.test.ts',
         'libs/util/**/src/**/*.test.ts',
         'libs/util/**/src/__tests__/**/*.test.ts',
         'libs/types/**/src/**/*.test.ts',
