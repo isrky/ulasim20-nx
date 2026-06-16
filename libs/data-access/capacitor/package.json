@@ -19,5 +19,10 @@
     "@capacitor/share": "8.0.0",
     "@capacitor/status-bar": "8.0.0",
     "@ulasim20/util-validation": "workspace:*"
+  },
+  "peerDependencies": { "react": "^18.3.1" },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "react": "^18.3.1"
   }
 }

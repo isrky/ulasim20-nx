@@ -22,6 +22,7 @@
     "@ulasim20/util-hooks": "workspace:*",
     "@ulasim20/util-search": "workspace:*",
     "@ulasim20/util-validation": "workspace:*",
+    "@capacitor/haptics": "8.0.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.2.2",

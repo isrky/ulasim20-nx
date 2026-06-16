@@ -10,6 +10,7 @@
     "@ulasim20/data-access-capacitor": "workspace:*",
     "@ulasim20/types-transport": "workspace:*",
     "@ulasim20/types-api": "workspace:*",
+    "@capacitor/core": "8.0.0",
     "pocketbase": "^0.26.8"
   },
   "devDependencies": {
