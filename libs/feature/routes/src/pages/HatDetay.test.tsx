@@ -19,6 +19,7 @@ vi.mock('@ulasim20/ui-page-shell', () => ({
   DesktopNav: () => null,
   MobileNav: () => null,
   BackHeader: ({ title }: { title: string }) => <div>{title}</div>,
+  cn: (...args: unknown[]) => args.filter(Boolean).join(' ')
 }))
 
 vi.mock('@ulasim20/feature-card', () => ({

@@ -8,10 +8,11 @@ const testsAlias = {
 export default defineWorkspace([
   {
     resolve: {
-      dedupe: ['react', 'react-dom'],
+      dedupe: ['react', 'react-dom', 'react-router', 'react-router-dom'],
       alias: {
         '@': path.resolve(__dirname, 'apps/web/src'),
-        ...testsAlias
+        ...testsAlias,
+        '@ulasim20/feature-routes': path.resolve(__dirname, 'libs/feature/routes/src/index.ts')
       }
     },
     test: {
