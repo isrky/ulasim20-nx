@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Ensure main ref exists for nx affected
+        run: git branch main origin/main || true
+
       - name: Lint, type-check, test, build (affected)
         run: pnpm exec nx affected -t lint type-check test build --parallel=2 --ci
         env:
