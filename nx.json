@@ -1,39 +1,67 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)",
       "!{projectRoot}/tsconfig.spec.json"
     ],
-    "sharedGlobals": ["{workspaceRoot}/tsconfig.base.json", "{workspaceRoot}/biome.json"]
+    "sharedGlobals": [
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/biome.json"
+    ]
   },
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
     },
     "test": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["default", "^production", "{workspaceRoot}/vitest.workspace.ts"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/vitest.workspace.ts"
+      ]
     },
     "lint": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["default", "{workspaceRoot}/biome.json"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "{workspaceRoot}/biome.json"
+      ]
     },
     "type-check": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["default", "{workspaceRoot}/tsconfig.base.json"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "{workspaceRoot}/tsconfig.base.json"
+      ]
     }
   },
   "defaultBase": "main",
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "libs"
-  }
+  },
+  "nxCloudId": "6a31a22d1b0830d0682fd278"
 }
