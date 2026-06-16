@@ -1,4 +1,5 @@
 import path from 'node:path'
+import react from '@vitejs/plugin-react'
 import { defineConfig, defineWorkspace } from 'vitest/config'
 
 const testsAlias = {
@@ -7,6 +8,7 @@ const testsAlias = {
 
 export default defineWorkspace([
   {
+    plugins: [react()],
     resolve: {
       dedupe: ['react', 'react-dom', 'react-router', 'react-router-dom'],
       alias: {
