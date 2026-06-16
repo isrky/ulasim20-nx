@@ -1,0 +1,17 @@
+{
+  "name": "@ulasim20/tests",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/react": "16.3.2",
+    "@ulasim20/feature-routes": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.3"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.9.1",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0"
+  }
+}
