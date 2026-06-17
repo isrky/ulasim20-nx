@@ -16,5 +16,31 @@
   ],
   "platformAutomerge": true,
   "automergeStrategy": "squash",
-  "automergeType": "pr"
+  "automergeType": "pr",
+  "packageRules": [
+    {
+      "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
+      "groupName": "weekly-minor-bundle",
+      "matchPackageNames": [
+        "@types/node",
+        "pocketbase",
+        "msw",
+        "wrangler",
+        "react-leaflet",
+        "react-day-picker",
+        "react-resizable-panels",
+        "recharts",
+        "vite-plugin-qrcode",
+        "@cloudflare/workers-types",
+        "@cloudflare/vitest-pool-workers",
+        "@vitejs/plugin-react",
+        "vitest",
+        "typescript",
+        "vite",
+        "pnpm"
+      ],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
+  ]
 }
