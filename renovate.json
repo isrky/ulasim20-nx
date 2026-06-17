@@ -49,6 +49,12 @@
       "dependencyDashboardApproval": true,
       "labels": ["major", "breaking"],
       "reviewers": ["@isrky"]
+    },
+    {
+      "description": "GitHub Actions: auto-merge on patch and minor; majors remain manual.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
     }
   ]
 }
