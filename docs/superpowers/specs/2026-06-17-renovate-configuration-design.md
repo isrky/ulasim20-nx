@@ -35,7 +35,7 @@ One file: `renovate.json` at the repo root. No `renovate/` directory, no shared 
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "baseBranches": ["main"],
+  "baseBranchPatterns": ["main"],
   "branchPrefix": "renovate/",
   "schedule": ["before 4am on wednesday"],
   "timezone": "Europe/Istanbul",
@@ -51,8 +51,6 @@ One file: `renovate.json` at the repo root. No `renovate/` directory, no shared 
   "platformAutomerge": true,
   "automergeStrategy": "squash",
   "automergeType": "pr",
-  "requiredStatusChecks": ["ci"],
-  "commitBody": true,
   "packageRules": [
     {
       "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
@@ -129,7 +127,7 @@ The `matchUpdateTypes: ["major"]` rule is evaluated before the security-advisory
 
 ## Schedule
 
-`schedule: ["before 4am on wednesday"]` with `timezone: "Europe/Istanbul"`. Renovate treats the schedule as a work window: it batches, opens PRs, and waits. With `platformAutomerge: true` and `requiredStatusChecks: ["ci"]`, automerge fires as soon as CI goes green.
+`schedule: ["before 4am on wednesday"]` with `timezone: "Europe/Istanbul"`. Renovate treats the schedule as a work window: it batches, opens PRs, and waits. With `platformAutomerge: true` and the `ci` job configured as a required status check in branch protection on `main`, automerge fires as soon as CI goes green.
 
 **Weekly flow:**
 
@@ -206,7 +204,7 @@ Three levels, any one of which fully stops Renovate:
 3. **React 19 / TypeScript 6 / Vite 8 majors.** When these unblock, each is its own PR with reviewer `@isrky` and the `breaking` label. Reviewing 4–6 such PRs is the cost of staying current.
 4. **Gradle / AGP majors can break the Android build.** AGP 8→9 and Gradle 8→9 are queued. Major PRs are manual; broken builds are visible in CI and do not auto-merge.
 5. **Renovate's `config:recommended` evolves.** Mend changes preset behavior between Renovate versions. If a future preset change affects grouping or schedule interpretation, the response is to set explicit overrides on the sub-options we depend on. Defer until a behavior change is observed.
-6. **Nx-migration branch conflict.** The `nx-migration` branch is in `ci.yml`'s trigger list. Renovate's `baseBranches: ["main"]` keeps it off the migration branch, so no conflict. If the migration merges to `main` while a Renovate PR is open, the PR will need to rebase — normal git flow.
+6. **Nx-migration branch conflict.** The `nx-migration` branch is in `ci.yml`'s trigger list. Renovate's `baseBranchPatterns: ["main"]` keeps it off the migration branch, so no conflict. If the migration merges to `main` while a Renovate PR is open, the PR will need to rebase — normal git flow.
 
 ## Out of scope
 

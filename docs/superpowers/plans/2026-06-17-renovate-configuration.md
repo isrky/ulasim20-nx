@@ -148,7 +148,7 @@ git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" 
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "baseBranches": ["main"],
+  "baseBranchPatterns": ["main"],
   "branchPrefix": "renovate/",
   "schedule": ["before 4am on wednesday"],
   "timezone": "Europe/Istanbul",
@@ -163,9 +163,7 @@ git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" 
   ],
   "platformAutomerge": true,
   "automergeStrategy": "squash",
-  "automergeType": "pr",
-  "requiredStatusChecks": ["ci"],
-  "commitBody": true
+  "automergeType": "pr"
 }
 ```
 
@@ -196,7 +194,7 @@ Insert a `packageRules` array at the bottom of `renovate.json` (the file already
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "baseBranches": ["main"],
+  "baseBranchPatterns": ["main"],
   "branchPrefix": "renovate/",
   "schedule": ["before 4am on wednesday"],
   "timezone": "Europe/Istanbul",
@@ -212,8 +210,6 @@ Insert a `packageRules` array at the bottom of `renovate.json` (the file already
   "platformAutomerge": true,
   "automergeStrategy": "squash",
   "automergeType": "pr",
-  "requiredStatusChecks": ["ci"],
-  "commitBody": true,
   "packageRules": [
     {
       "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
