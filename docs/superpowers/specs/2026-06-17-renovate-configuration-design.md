@@ -55,7 +55,7 @@ One file: `renovate.json` at the repo root. No `renovate/` directory, no shared 
     {
       "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
       "groupName": "weekly-minor-bundle",
-      "appliesTo": [
+      "matchPackageNames": [
         "@types/node",
         "pocketbase",
         "msw",

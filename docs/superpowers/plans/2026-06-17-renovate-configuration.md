@@ -214,7 +214,7 @@ Insert a `packageRules` array at the bottom of `renovate.json` (the file already
     {
       "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
       "groupName": "weekly-minor-bundle",
-      "appliesTo": [
+      "matchPackageNames": [
         "@types/node",
         "pocketbase",
         "msw",
@@ -267,7 +267,7 @@ Insert a new entry after the `weekly-minor-bundle` rule (still inside the `packa
   {
     "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
     "groupName": "weekly-minor-bundle",
-    "appliesTo": [
+    "matchPackageNames": [
       "@types/node",
       "pocketbase",
       "msw",
