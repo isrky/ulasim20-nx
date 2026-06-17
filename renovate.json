@@ -41,6 +41,14 @@
       ],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
+    },
+    {
+      "description": "All major-version updates are manual, drafted, and require dashboard approval.",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "dependencyDashboardApproval": true,
+      "labels": ["major", "breaking"],
+      "reviewers": ["@isrky"]
     }
   ]
 }
