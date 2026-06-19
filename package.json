@@ -23,13 +23,14 @@
     "lint:fix": "biome lint --write . && pnpm exec nx run-many -t lint -- --fix",
     "format": "biome format .",
     "format:fix": "biome format --write .",
-    "check": "pnpm exec nx run-many -t lint type-check",
+    "check": "pnpm exec nx run-many -t lint type-check && pnpm run renovate:validate",
     "check:fix": "pnpm exec nx run-many -t lint -- --write --fix && pnpm exec nx run-many -t lint -- --fix",
     "planner:fetch": "pnpm exec nx run backend:planner:fetch-normalize",
     "planner:signature": "pnpm exec nx run backend:planner:compute-source-signature",
     "planner:compile": "pnpm exec nx run backend:planner:compile-dataset",
     "planner:validate": "pnpm exec nx run backend:planner:validate-dataset",
-    "planner:promote": "pnpm exec nx run backend:planner:promote-manifest"
+    "planner:promote": "pnpm exec nx run backend:planner:promote-manifest",
+    "renovate:validate": "npx --yes --package renovate -- renovate-config-validator"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

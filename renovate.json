@@ -1,0 +1,59 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "baseBranchPatterns": ["main"],
+  "branchPrefix": "renovate/",
+  "schedule": ["before 4am on wednesday"],
+  "timezone": "Europe/Istanbul",
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 10,
+  "enabledManagers": ["npm", "github-actions", "gradle", "gradle-wrapper"],
+  "ignorePaths": [
+    "**/dist/**",
+    "**/coverage/**",
+    "**/.nx/cache/**",
+    "**/node_modules/**"
+  ],
+  "packageRules": [
+    {
+      "description": "Weekly minor/patch bundle for non-monorepo npm packages.",
+      "groupName": "weekly-minor-bundle",
+      "matchPackageNames": [
+        "@types/node",
+        "pocketbase",
+        "msw",
+        "wrangler",
+        "react-leaflet",
+        "react-day-picker",
+        "react-resizable-panels",
+        "recharts",
+        "vite-plugin-qrcode",
+        "@cloudflare/workers-types",
+        "@cloudflare/vitest-pool-workers",
+        "@vitejs/plugin-react",
+        "vitest",
+        "typescript",
+        "vite",
+        "pnpm"
+      ],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "All major-version updates are manual, drafted, and require dashboard approval.",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true,
+      "labels": ["major", "breaking"],
+      "reviewers": ["@isrky"]
+    },
+    {
+      "description": "GitHub Actions: batch patch and minor updates together; manual review.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Gradle and Android tools: batch patch and minor updates together; manual review.",
+      "matchManagers": ["gradle", "gradle-wrapper"],
+      "matchUpdateTypes": ["minor", "patch"]
+    }
+  ]
+}
