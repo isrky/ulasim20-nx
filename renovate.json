@@ -14,12 +14,9 @@
     "**/.nx/cache/**",
     "**/node_modules/**"
   ],
-  "platformAutomerge": true,
-  "automergeStrategy": "squash",
-  "automergeType": "pr",
   "packageRules": [
     {
-      "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
+      "description": "Weekly minor/patch bundle for non-monorepo npm packages.",
       "groupName": "weekly-minor-bundle",
       "matchPackageNames": [
         "@types/node",
@@ -39,28 +36,24 @@
         "vite",
         "pnpm"
       ],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "description": "All major-version updates are manual, drafted, and require dashboard approval.",
       "matchUpdateTypes": ["major"],
-      "automerge": false,
       "dependencyDashboardApproval": true,
       "labels": ["major", "breaking"],
       "reviewers": ["@isrky"]
     },
     {
-      "description": "GitHub Actions: auto-merge on patch and minor; majors remain manual.",
+      "description": "GitHub Actions: batch patch and minor updates together; manual review.",
       "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
-      "description": "Gradle and Android tools: auto-merge on patch and minor; majors remain manual.",
+      "description": "Gradle and Android tools: batch patch and minor updates together; manual review.",
       "matchManagers": ["gradle", "gradle-wrapper"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ]
 }
