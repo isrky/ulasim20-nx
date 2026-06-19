@@ -112,7 +112,7 @@ Each major-version bump becomes its own PR. Opens as a draft, labels `major` and
 
 | Update type | Non-monorepo npm | Monorepo preset PRs | Major | Security advisory |
 |---|---|---|---|---|
-| patch | auto | auto | n/a | auto |
+| patch | manual | manual | n/a | manual |
 | minor | manual (bundle) | manual (per-preset PR) | n/a | manual |
 | major | manual | manual | manual | manual |
 | GitHub Actions patch/minor | manual | n/a | manual | manual |
