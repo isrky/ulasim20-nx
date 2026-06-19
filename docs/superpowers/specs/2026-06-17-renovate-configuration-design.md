@@ -103,10 +103,10 @@ Three layers, applied in priority order (later rules win).
 Renovate auto-detects and groups `nx`, `radix-ui-primitives`, `capacitor`, `tanstack-virtual`, `typescript-eslint`, `eslint`, `material-ui`, `lucide`, `react`, `react-router` into one PR each. These PRs are batched for manual review on `patch` and `minor` updates.
 
 **Layer 2 — `weekly-minor-bundle` (custom package rule).**
-Bundles every non-major npm update that is not in a monorepo group into a single PR. Auto-merges on green CI. Runs only when at least one matched package actually moved that week; no empty PRs.
+Bundles every non-major npm update that is not in a monorepo group into a single PR. The maintainer merges after `ci` is green. Runs only when at least one matched package actually moved that week; no empty PRs.
 
 **Layer 3 — Major-version separation (custom package rule).**
-Each major-version bump becomes its own PR. Opens as a draft, labels `major` and `breaking`, assigns `@isrky`, requires explicit approval from the Dependency Dashboard before merge.
+Each major-version bump becomes its own PR. Opens as a draft, labels `major` and `breaking`, assigns `@isrky`, requires explicit approval from the Dependency Dashboard before merge. Bundle-member packages (e.g., `vitest`) that bump to a major version fall through to this rule because the major rule is positioned after the bundle rule in `packageRules` and matches any update type the bundle does not (`["major"]` vs. the bundle's `["minor", "patch"]`).
 
 ## Auto-merge matrix
 
@@ -140,7 +140,7 @@ Per-PR regeneration. Each grouped PR is one `pnpm install` that re-locks; no sep
 `vulnerabilityAlerts: true` (default with `config:recommended`). A GitHub Advisory trigger opens a security PR regardless of schedule.
 
 - One package per PR (no grouping, so the fix is auditable).
-- Auto-merge on green CI.
+- Merged manually by the maintainer after `ci` is green.
 - Branch prefix: `renovate/security-…`.
 - Subject to the major-version rule above: a security advisory that is also a major bump is treated as a major (manual, drafted, dashboard approval required).
 
@@ -148,7 +148,7 @@ Per-PR regeneration. Each grouped PR is one `pnpm install` that re-locks; no sep
 
 The `ci` job in `.github/workflows/ci.yml` is the only gate. It runs `pnpm install --frozen-lockfile` and `nx affected -t lint type-check test build`, then conditionally E2E and deploy on `push` to `main`.
 
-**Auto-merge path:**
+**Manual-merge path (non-major updates):**
 
 1. Renovate opens PR with labels (`renovate`).
 2. `ci` runs and reports success.
