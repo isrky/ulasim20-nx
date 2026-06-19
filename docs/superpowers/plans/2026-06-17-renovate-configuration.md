@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace PR #21's stub `renovate.json` with a production Renovate configuration that keeps dependencies current with low review burden, gates majors for manual review, and auto-lands patches/minors/security fixes on green CI.
+**Goal:** Replace PR #21's stub `renovate.json` with a production Renovate configuration that keeps dependencies current with low review burden, gates majors for manual review, and batches patches/minors/security into compact PRs that the maintainer merges after `ci` is green.
 
-**Architecture:** A single `renovate.json` at the repo root extends `config:recommended` and adds four custom `packageRules` (weekly-minor-bundle, majors, GitHub Actions, Gradle). Validation runs through `renovate-config-validator` via a `pnpm run renovate:validate` script that uses `npx` (no `renovate` devDependency — keep the lockfile lean). A one-time branch-protection step on `main` is the only manual prerequisite for auto-merge.
+**Architecture:** A single `renovate.json` at the repo root extends `config:recommended` and adds four custom `packageRules` (weekly-minor-bundle, majors, GitHub Actions, Gradle). Validation runs through `renovate-config-validator` via a `pnpm run renovate:validate` script that uses `npx` (no `renovate` devDependency — keep the lockfile lean). All updates are reviewed and merged manually — auto-merge is off because the repo is private on GitHub Free, where branch protection is unavailable.
 
 **Tech Stack:** Renovate (Mend-hosted), `renovate-config-validator` (CLI), pnpm scripts, GitHub branch protection.
 
@@ -137,7 +137,7 @@ git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" 
 
 ---
 
-## Task 3: Add scheduling, automerge, and global flags
+## Task 3: Add scheduling and global flags
 
 **Files:**
 - Modify: `renovate.json`
@@ -160,10 +160,7 @@ git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" 
     "**/coverage/**",
     "**/.nx/cache/**",
     "**/node_modules/**"
-  ],
-  "platformAutomerge": true,
-  "automergeStrategy": "squash",
-  "automergeType": "pr"
+  ]
 }
 ```
 
@@ -176,7 +173,7 @@ Expected: exits 0 with `INFO: Config validated successfully`.
 
 ```bash
 git add renovate.json
-git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" commit -m "chore(renovate): add schedule, automerge, and global flags"
+git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" commit -m "chore(renovate): add schedule and global flags"
 ```
 
 ---
@@ -207,12 +204,9 @@ Insert a `packageRules` array at the bottom of `renovate.json` (the file already
     "**/.nx/cache/**",
     "**/node_modules/**"
   ],
-  "platformAutomerge": true,
-  "automergeStrategy": "squash",
-  "automergeType": "pr",
   "packageRules": [
     {
-      "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
+      "description": "Weekly minor/patch bundle for non-monorepo npm packages.",
       "groupName": "weekly-minor-bundle",
       "matchPackageNames": [
         "@types/node",
@@ -232,8 +226,7 @@ Insert a `packageRules` array at the bottom of `renovate.json` (the file already
         "vite",
         "pnpm"
       ],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ]
 }
@@ -265,7 +258,7 @@ Insert a new entry after the `weekly-minor-bundle` rule (still inside the `packa
 ```json
 "packageRules": [
   {
-    "description": "Weekly minor/patch bundle for non-monorepo npm packages; auto-merges on green CI.",
+    "description": "Weekly minor/patch bundle for non-monorepo npm packages.",
     "groupName": "weekly-minor-bundle",
     "matchPackageNames": [
       "@types/node",
@@ -285,13 +278,11 @@ Insert a new entry after the `weekly-minor-bundle` rule (still inside the `packa
       "vite",
       "pnpm"
     ],
-    "matchUpdateTypes": ["minor", "patch"],
-    "automerge": true
+    "matchUpdateTypes": ["minor", "patch"]
   },
   {
     "description": "All major-version updates are manual, drafted, and require dashboard approval.",
     "matchUpdateTypes": ["major"],
-    "automerge": false,
     "dependencyDashboardApproval": true,
     "labels": ["major", "breaking"],
     "reviewers": ["@isrky"]
@@ -324,10 +315,9 @@ Insert a new entry at the end of the `packageRules` array (after the major rule,
 
 ```json
 {
-  "description": "GitHub Actions: auto-merge on patch and minor; majors remain manual.",
+  "description": "GitHub Actions: batch patch and minor updates together; manual review.",
   "matchManagers": ["github-actions"],
-  "matchUpdateTypes": ["minor", "patch"],
-  "automerge": true
+  "matchUpdateTypes": ["minor", "patch"]
 }
 ```
 
@@ -340,7 +330,7 @@ Expected: exits 0.
 
 ```bash
 git add renovate.json
-git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" commit -m "chore(renovate): add GitHub Actions auto-merge rule"
+git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" commit -m "chore(renovate): add GitHub Actions package rule"
 ```
 
 ---
@@ -356,10 +346,9 @@ Insert a new entry at the end of the `packageRules` array (after the github-acti
 
 ```json
 {
-  "description": "Gradle and Android tools: auto-merge on patch and minor; majors remain manual.",
+  "description": "Gradle and Android tools: batch patch and minor updates together; manual review.",
   "matchManagers": ["gradle", "gradle-wrapper"],
-  "matchUpdateTypes": ["minor", "patch"],
-  "automerge": true
+  "matchUpdateTypes": ["minor", "patch"]
 }
 ```
 
@@ -382,7 +371,7 @@ Expected: `lint` and `type-check` complete without errors, then `renovate:valida
 
 ```bash
 git add renovate.json
-git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" commit -m "chore(renovate): add Gradle auto-merge rule (final config)"
+git -c user.email=isrky@users.noreply.github.com -c user.name="Ismail Sarikaya" commit -m "chore(renovate): add Gradle package rule (final config)"
 ```
 
 ---
@@ -405,7 +394,7 @@ gh pr create \
   --base main \
   --head chore/renovate-config \
   --title "chore(renovate): production configuration (closes #21)" \
-  --body "Configures Renovate with grouped monorepo updates, weekly Wednesday 04:00 Istanbul schedule, automerge for patch/minor/security, manual review for majors. Closes #21."
+  --body "Configures Renovate with grouped monorepo updates, weekly Wednesday 04:00 Istanbul schedule, manual review for all updates including patches and minors. Closes #21."
 ```
 
 Expected: PR opens against `main`. CI runs `lint`, `type-check`, `test`, `build` and the new `renovate:validate` step — all should pass.
@@ -417,24 +406,13 @@ Expected: one open PR.
 
 ---
 
-## Task 9: Manual prerequisite — enable branch protection on `main`
+## Task 9: Manual prerequisite — none required
 
-This is a one-time repo setting, not a code change. It must be done before any Renovate PR can auto-merge.
+Earlier revisions of this plan included a "enable branch protection on `main`" prerequisite. That prerequisite was based on the assumption that `platformAutomerge: true` would auto-land safe updates, which requires branch protection with required status checks.
 
-- [ ] **Step 1: Navigate to branch protection settings**
+Branch protection is **not available** on the current GitHub tier (private repo on GitHub Free). Therefore this design disables `platformAutomerge` and all per-rule `automerge: true` flags: every Renovate PR is reviewed and merged manually by the maintainer. CI (`ci` job in `.github/workflows/ci.yml`) still runs on every PR and is visible in the merge box as a status check, but it does not gate auto-merge because there is no auto-merge.
 
-Open `https://github.com/isrky/ulasim20-nx/settings/branches` (or the equivalent URL for this repo's `main` branch protection rules).
-
-- [ ] **Step 2: Add `ci` as a required status check**
-
-In the `main` branch protection rule:
-- Enable "Require status checks to pass before merging".
-- In the status checks list, search for and select `ci` (the only job in `.github/workflows/ci.yml`).
-- Save the rule.
-
-- [ ] **Step 3: Verify the rule is active**
-
-Open the activation PR from Task 8. The branch protection check should now show as required in the PR's merge box. (No merge action — just confirm the rule is visible.)
+**No manual prerequisite.** Skip this task; proceed to Task 10.
 
 ---
 
@@ -452,19 +430,15 @@ Expected: exits 0. Run: `cat renovate.json` and compare against the spec's `Conf
 Run: `gh pr view 21 --json state`
 Expected: `"state": "CLOSED"`. (Closing happens when the activation PR from Task 8 is merged, or when you close #21 manually with a comment referencing the new PR.)
 
-- [ ] **AC3 — Branch protection on `main` requires `ci`**
+- [ ] **AC3 — First Wednesday observation (deferred)**
 
-This is a manual verification — confirm the rule is in place via the GitHub UI (no CLI to read this directly).
+The Dependency Dashboard lists expected PRs (3–6 non-major PRs across monorepo groups plus the weekly-minor-bundle) on the Wednesday after this PR lands. **This criterion cannot be satisfied during the implementation session; it is a downstream verification.**
 
-- [ ] **AC4 — First Wednesday observation (deferred)**
+- [ ] **AC4 — vitest-v3 PR opens as manual-merge (deferred)**
 
-The first non-major auto-merge is observed on the Wednesday after this PR lands. Confirm via the Dependency Dashboard and merged-PR history. **This criterion cannot be satisfied during the implementation session; it is a downstream verification.**
+The queued vitest-v3 security major PR (from PR #21's onboarding summary) should open as a **manually-merged** PR after config lands, confirming the major rule beats the security-advisory path. **Deferred to first Wednesday observation.**
 
-- [ ] **AC5 — vitest-v3 PR opens as manual-merge (deferred)**
-
-The queued vitest-v3 security major PR (from PR #21's onboarding summary) should open as a **manual-merge** PR after config lands, confirming the major rule beats the security-advisory path. **Deferred to first Wednesday observation.**
-
-- [ ] **AC6 — `pnpm run renovate:validate` exits 0**
+- [ ] **AC5 — `pnpm run renovate:validate` exits 0**
 
 Run: `pnpm run renovate:validate`
 Expected: exits 0.
@@ -473,9 +447,8 @@ Expected: exits 0.
 
 ## Definition of Done
 
-- All nine tasks checked.
+- All ten tasks checked.
 - `renovate.json` exists at the repo root, validates, and matches the spec.
 - `pnpm run renovate:validate` exits 0; `pnpm run check` exits 0.
 - The activation PR is open against `main` and CI is green.
-- Branch protection on `main` lists `ci` as a required status check.
-- AC1, AC2, AC3, AC6 are satisfied in-session; AC4 and AC5 are deferred to the first Wednesday observation.
+- AC1, AC2, AC5 are satisfied in-session; AC3 and AC4 are deferred to the first Wednesday observation.
