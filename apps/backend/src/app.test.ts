@@ -17,6 +17,13 @@ describe('Hono app — health', () => {
     const body = (await res.json()) as Record<string, unknown>
     expect(body.service).toBe('ulasim-backend')
   })
+
+  it('GET /health returns { status: "ok" }', async () => {
+    const res = await SELF.fetch('http://localhost/health')
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as { status: string }
+    expect(body.status).toBe('ok')
+  })
 })
 
 describe('Hono app — CORS', () => {
