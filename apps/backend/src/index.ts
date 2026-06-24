@@ -59,6 +59,10 @@ app.get('/api/', (c) => {
   })
 })
 
+// Minimal health endpoint for Uptime Kuma (https://api.ulasim20.com/health).
+// Returns 200 + { status: "ok" } with no I/O so it cannot cause a real incident.
+app.get('/health', (c) => c.json({ status: 'ok' }))
+
 // API Routes
 app.route('/api/stations', stationsRouter)
 app.route('/api/routes', routesRouter)
