@@ -4,11 +4,13 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 
 const functionsSrc = path.resolve(__dirname, 'functions')
+const functionsBuiltDir = path.resolve(__dirname, '.functions-built')
 const functionsDest = path.resolve(__dirname, 'dist/functions')
 const wranglerTomlSrc = path.resolve(__dirname, 'wrangler.toml')
 const wranglerTomlDest = path.resolve(__dirname, 'dist/wrangler.toml')
 const routesJsonDest = path.resolve(__dirname, 'dist/_routes.json')
 const redirectsDest = path.resolve(__dirname, 'dist/_redirects')
+const workerDest = path.resolve(__dirname, 'dist/_worker.js')
 const pluginMarker = path.resolve(__dirname, 'dist/.plugin-ran')
 
 const routesJson = {
@@ -25,10 +27,13 @@ export default defineConfig({
       closeBundle() {
         fs.rmSync(functionsDest, { recursive: true, force: true })
         fs.cpSync(functionsSrc, functionsDest, { recursive: true })
-        fs.writeFileSync(routesJsonDest, JSON.stringify(routesJson, null, 2))
+        const compiledWorker = path.join(functionsBuiltDir, 'index.js')
+        if (fs.existsSync(compiledWorker)) fs.cpSync(compiledWorker, workerDest)
+        const compiledRoutes = path.join(functionsBuiltDir, '_routes.json')
+        if (fs.existsSync(compiledRoutes)) fs.cpSync(compiledRoutes, routesJsonDest)
         if (fs.existsSync(redirectsDest)) fs.rmSync(redirectsDest)
         if (fs.existsSync(wranglerTomlSrc)) fs.cpSync(wranglerTomlSrc, wranglerTomlDest)
-        fs.writeFileSync(pluginMarker, `src=${functionsSrc}\ndest=${functionsDest}\n`)
+        fs.writeFileSync(pluginMarker, `src=${functionsSrc}\ndest=${functionsDest}\nworker=${workerDest}\n`)
       },
     },
   ],
