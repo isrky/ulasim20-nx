@@ -6,7 +6,7 @@
   "tags": ["scope:backend"],
   "targets": {
     "build": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter backend build" } },
-    "dev": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter backend dev" } },
+    "serve": { "executor": "nx:run-commands", "options": { "command": "pnpm --filter backend dev" } },
     "test": { "executor": "nx:run-commands", "options": { "command": "vitest run", "cwd": "apps/backend" } },
     "lint": { "executor": "nx:run-commands", "options": {
         "commands": [
