@@ -1,9 +1,22 @@
 import { plugins, server as serverPreset } from '../../libs/config/vite/vite.preset.js'
+import fs from 'node:fs'
 import path from 'node:path'
 import { defineConfig } from 'vite'
 
+const functionsSrc = path.resolve(__dirname, 'functions')
+const functionsDest = path.resolve(__dirname, 'dist/functions')
+
 export default defineConfig({
-  plugins,
+  plugins: [
+    ...plugins,
+    {
+      name: 'copy-cloudflare-functions',
+      closeBundle() {
+        fs.rmSync(functionsDest, { recursive: true, force: true })
+        fs.cpSync(functionsSrc, functionsDest, { recursive: true })
+      },
+    },
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
