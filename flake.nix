@@ -40,6 +40,7 @@
             android-tools
             google-cloud-sdk
             pocketbase
+            playwright-driver.browsers
           ];
 
           shellHook = ''
@@ -54,6 +55,15 @@
 
             export VERTEXAI_LOCATION="global"
             export VERTEXAI_PROJECT="project-61fdbcb8-2ddf-4f57-901"
+
+            # Playwright'a tarayıcıları indirdiği yerde değil, Nix deposundan almasını söyle
+            export PLAYWRIGHT_BROWSERS_PATH=${pkgs.playwright-driver.browsers}
+
+            # Playwright'ın "Bilinmeyen Linux Dağıtımı" veya eksik bağımlılık hatası vermesini engelle
+            export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
+
+            # (Opsiyonel) Platform uyumsuzluklarını aşmak için NixOS Wiki'nin önerdiği geçici çözüm
+            export PLAYWRIGHT_HOST_PLATFORM_OVERRIDE="ubuntu-24.04"
           '';
         };
       }
