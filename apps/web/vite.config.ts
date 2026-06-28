@@ -8,6 +8,7 @@ const functionsDest = path.resolve(__dirname, 'dist/functions')
 const wranglerTomlSrc = path.resolve(__dirname, 'wrangler.toml')
 const wranglerTomlDest = path.resolve(__dirname, 'dist/wrangler.toml')
 const routesJsonDest = path.resolve(__dirname, 'dist/_routes.json')
+const redirectsDest = path.resolve(__dirname, 'dist/_redirects')
 const pluginMarker = path.resolve(__dirname, 'dist/.plugin-ran')
 
 const routesJson = {
@@ -15,6 +16,14 @@ const routesJson = {
   include: ['/denizli-api/*', '/api/*', '/route-api/*'],
   exclude: [],
 }
+
+const redirects =
+  '# Cloudflare Pages: serve SPA shell for client-side routes\n' +
+  '# Excluded function prefixes so they reach Functions instead of the shell.\n' +
+  '/!denizli-api*/* /index.html 200\n' +
+  '/!api*/* /index.html 200\n' +
+  '/!route-api*/* /index.html 200\n' +
+  '/* /index.html 200\n'
 
 export default defineConfig({
   plugins: [
@@ -25,6 +34,7 @@ export default defineConfig({
         fs.rmSync(functionsDest, { recursive: true, force: true })
         fs.cpSync(functionsSrc, functionsDest, { recursive: true })
         fs.writeFileSync(routesJsonDest, JSON.stringify(routesJson, null, 2))
+        fs.writeFileSync(redirectsDest, redirects)
         if (fs.existsSync(wranglerTomlSrc)) fs.cpSync(wranglerTomlSrc, wranglerTomlDest)
         fs.writeFileSync(pluginMarker, `src=${functionsSrc}\ndest=${functionsDest}\n`)
       },
