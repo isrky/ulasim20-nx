@@ -17,14 +17,6 @@ const routesJson = {
   exclude: [],
 }
 
-const redirects =
-  '# Cloudflare Pages: serve SPA shell for client-side routes\n' +
-  '# Excluded function prefixes so they reach Functions instead of the shell.\n' +
-  '/!denizli-api*/* /index.html 200\n' +
-  '/!api*/* /index.html 200\n' +
-  '/!route-api*/* /index.html 200\n' +
-  '/* /index.html 200\n'
-
 export default defineConfig({
   plugins: [
     ...plugins,
@@ -34,7 +26,7 @@ export default defineConfig({
         fs.rmSync(functionsDest, { recursive: true, force: true })
         fs.cpSync(functionsSrc, functionsDest, { recursive: true })
         fs.writeFileSync(routesJsonDest, JSON.stringify(routesJson, null, 2))
-        fs.writeFileSync(redirectsDest, redirects)
+        if (fs.existsSync(redirectsDest)) fs.rmSync(redirectsDest)
         if (fs.existsSync(wranglerTomlSrc)) fs.cpSync(wranglerTomlSrc, wranglerTomlDest)
         fs.writeFileSync(pluginMarker, `src=${functionsSrc}\ndest=${functionsDest}\n`)
       },
