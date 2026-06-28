@@ -1,6 +1,5 @@
 name = "ulasim20-pages"
 compatibility_date = "2025-10-31"
-pages_build_output_dir = "./dist"
 
 [vars]
 # Fallback for environments where the service binding is not configured yet.

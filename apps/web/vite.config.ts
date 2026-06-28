@@ -5,6 +5,8 @@ import { defineConfig } from 'vite'
 
 const functionsSrc = path.resolve(__dirname, 'functions')
 const functionsDest = path.resolve(__dirname, 'dist/functions')
+const wranglerTomlSrc = path.resolve(__dirname, 'wrangler.toml')
+const wranglerTomlDest = path.resolve(__dirname, 'dist/wrangler.toml')
 const pluginMarker = path.resolve(__dirname, 'dist/.plugin-ran')
 
 export default defineConfig({
@@ -15,7 +17,8 @@ export default defineConfig({
       closeBundle() {
         fs.rmSync(functionsDest, { recursive: true, force: true })
         fs.cpSync(functionsSrc, functionsDest, { recursive: true })
-        fs.writeFileSync(pluginMarker, `src=${functionsSrc}\ndest=${functionsDest}\n`)
+        if (fs.existsSync(wranglerTomlSrc)) fs.cpSync(wranglerTomlSrc, wranglerTomlDest)
+        fs.writeFileSync(pluginMarker, `src=${functionsSrc}\ndest=${functionsDest}\nwrangler.toml copied to dist/\n`)
       },
     },
   ],
