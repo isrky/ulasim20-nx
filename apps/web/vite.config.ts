@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 
 const functionsSrc = path.resolve(__dirname, 'functions')
 const functionsDest = path.resolve(__dirname, 'dist/functions')
+const pluginMarker = path.resolve(__dirname, 'dist/.plugin-ran')
 
 export default defineConfig({
   plugins: [
@@ -14,6 +15,7 @@ export default defineConfig({
       closeBundle() {
         fs.rmSync(functionsDest, { recursive: true, force: true })
         fs.cpSync(functionsSrc, functionsDest, { recursive: true })
+        fs.writeFileSync(pluginMarker, `src=${functionsSrc}\ndest=${functionsDest}\n`)
       },
     },
   ],
