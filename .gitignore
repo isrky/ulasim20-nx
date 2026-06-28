@@ -22,6 +22,7 @@ dist
 
 # Build cache and tooling
 backend/.wrangler/*
+apps/*/.wrangler/
 /.wrangler/
 .openclaude/
 
