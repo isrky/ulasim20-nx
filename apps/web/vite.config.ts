@@ -5,7 +5,14 @@ import { defineConfig } from 'vite'
 
 const functionsSrc = path.resolve(__dirname, 'functions')
 const functionsDest = path.resolve(__dirname, 'dist/functions')
+const routesJsonDest = path.resolve(__dirname, 'dist/_routes.json')
 const pluginMarker = path.resolve(__dirname, 'dist/.plugin-ran')
+
+const routesJson = {
+  version: 1,
+  include: ['/denizli-api/*', '/api/*', '/route-api/*'],
+  exclude: [],
+}
 
 export default defineConfig({
   plugins: [
@@ -15,6 +22,7 @@ export default defineConfig({
       closeBundle() {
         fs.rmSync(functionsDest, { recursive: true, force: true })
         fs.cpSync(functionsSrc, functionsDest, { recursive: true })
+        fs.writeFileSync(routesJsonDest, JSON.stringify(routesJson, null, 2))
         fs.writeFileSync(pluginMarker, `src=${functionsSrc}\ndest=${functionsDest}\n`)
       },
     },
