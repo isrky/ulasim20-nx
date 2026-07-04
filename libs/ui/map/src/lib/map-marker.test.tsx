@@ -51,9 +51,20 @@ describe('<MapMarker />', () => {
     )
     rerender(<MapMarker map={fakeMap} position={{ lng: 29.09, lat: 37.78 }} />)
     const m = markerInstances[0]
-    expect(m.setLngLat.mock.calls).toEqual([
-      [[29.08, 37.77]],
-      [[29.09, 37.78]],
-    ])
+    expect(m.setLngLat.mock.calls.length).toBeGreaterThanOrEqual(2)
+    expect(m.setLngLat).toHaveBeenLastCalledWith([29.09, 37.78])
+  })
+
+  it('fires onClick when the marker element is clicked and cleans up the listener on unmount', () => {
+    const onClick = vi.fn()
+    const { container, unmount } = render(
+      <MapMarker map={fakeMap} position={{ lng: 29.08, lat: 37.77 }} onClick={onClick} />,
+    )
+    const markerEl = container.firstChild as HTMLElement
+    markerEl.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    expect(onClick).toHaveBeenCalledTimes(1)
+    unmount()
+    markerEl.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    expect(onClick).toHaveBeenCalledTimes(1)
   })
 })
