@@ -2,13 +2,18 @@ import { useEffect } from 'react'
 import { MapMarker, useMapInstance } from '@ulasim20/ui-map'
 import type { RefillPoint, ProcessedStation } from './use-transit-map'
 import { SEARCH_HIGHLIGHT_ZOOM } from './constants'
+import { refillIconSvg, searchHighlightSvg, userIconSvg } from './icons'
 
 export function UserLocationMarker({ position }: { position: { lng: number; lat: number } | null }) {
   const map = useMapInstance()
   if (!map || !position) return null
   return (
     <MapMarker map={map} position={position} className="user-location-marker">
-      <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="10" fill="#3b82f6" stroke="white" strokeWidth="2" /><circle cx="12" cy="12" r="4" fill="white" /></svg>
+      <span
+        aria-hidden
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: static SVG string built in our own icons.ts helpers, no untrusted input
+        dangerouslySetInnerHTML={{ __html: userIconSvg() }}
+      />
     </MapMarker>
   )
 }
@@ -23,7 +28,11 @@ export function RefillMarker({ point, onClick }: { point: RefillPoint; onClick: 
       className="refill-marker"
       onClick={onClick}
     >
-      <svg viewBox="0 0 14 14" width="14" height="14"><circle cx="7" cy="7" r="6" fill="#3b82f6" stroke="white" strokeWidth="2" /></svg>
+      <span
+        aria-hidden
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: static SVG string built in our own icons.ts helpers, no untrusted input
+        dangerouslySetInnerHTML={{ __html: refillIconSvg() }}
+      />
     </MapMarker>
   )
 }
@@ -41,7 +50,11 @@ export function SearchHighlightMarker({ stop }: { stop: ProcessedStation }) {
       position={{ lng: stop.lng, lat: stop.lat }}
       className="search-highlight"
     >
-      <svg viewBox="0 0 22 22" width="22" height="22"><circle cx="11" cy="11" r="9" fill="#6a9a5b" stroke="white" strokeWidth="3" /></svg>
+      <span
+        aria-hidden
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: static SVG string built in our own icons.ts helpers, no untrusted input
+        dangerouslySetInnerHTML={{ __html: searchHighlightSvg() }}
+      />
     </MapMarker>
   )
 }
