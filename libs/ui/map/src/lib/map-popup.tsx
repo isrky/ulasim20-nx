@@ -18,9 +18,11 @@ export function MapPopup({
   const popupRef = useRef<MapLibrePopup | null>(null)
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
 
-  // Mount: create popup + add to map. closeOnClick and anchor are intentionally
-  // not deps: anchor has its own effect (cheap setLngLat), and closeOnClick is
-  // only applied at construction; only the map identity should rebuild.
+  // Mount: create popup + add to map. closeOnClick and onClose are intentionally
+  // not deps: anchor has its own effect (cheap setLngLat), closeOnClick is only
+  // applied at construction, and onClose is re-registered in a separate effect
+  // so the listener stays fresh without rebuilding the popup; only the map
+  // identity should rebuild.
   // biome-ignore lint/correctness/useExhaustiveDependencies: see comment above
   useEffect(() => {
     const popup = new MapLibrePopup({
@@ -30,7 +32,6 @@ export function MapPopup({
     })
       .setLngLat([anchor.lng, anchor.lat])
       .addTo(map)
-    popup.on('close', onClose)
     popupRef.current = popup
     return () => {
       popup.remove()
@@ -38,9 +39,30 @@ export function MapPopup({
     }
   }, [map])
 
+  // Position updates.
   useEffect(() => {
     popupRef.current?.setLngLat([anchor.lng, anchor.lat])
   }, [anchor.lng, anchor.lat])
+
+  // Wire React-rendered children into the popup. The ref-callback pattern below
+  // sets `container` on mount/update; this effect forwards that node to the
+  // popup so children render inside it instead of the hidden React div.
+  useEffect(() => {
+    if (popupRef.current && container) {
+      popupRef.current.setDOMContent(container)
+    }
+  }, [container])
+
+  // Keep onClose fresh: re-register the listener whenever the prop changes so
+  // it doesn't capture a stale closure.
+  useEffect(() => {
+    const popup = popupRef.current
+    if (!popup) return
+    popup.on('close', onClose)
+    return () => {
+      popup.off('close', onClose)
+    }
+  }, [onClose])
 
   return (
     <>
