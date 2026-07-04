@@ -602,22 +602,16 @@ importers:
       '@ulasim20/util-search':
         specifier: workspace:*
         version: link:../../util/search
-      leaflet:
-        specifier: ^1.9.4
-        version: 1.9.4
       lucide-react:
         specifier: ^0.552.0
         version: 0.552.0(react@18.3.1)
-      react-leaflet:
-        specifier: ^4.2.1
-        version: 4.2.1(leaflet@1.9.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      maplibre-gl:
+        specifier: ^4.7.1
+        version: 4.7.1
       react-router-dom:
         specifier: ^6.30.3
         version: 6.30.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
-      '@types/leaflet':
-        specifier: ^1.9.21
-        version: 1.9.21
       '@types/react':
         specifier: ^18.3.5
         version: 18.3.31
