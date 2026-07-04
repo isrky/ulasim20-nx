@@ -153,3 +153,40 @@ describe('useTransitMap — handleSelectLine', () => {
     await waitFor(() => expect(result.current.selectedLine?.lineCode).toBe('320'))
   })
 })
+
+describe('useTransitMap — vehicle polling', () => {
+  it('refreshes selectedLine.vehicles every 15s while a line is selected', async () => {
+    const { apiGet, getRouteGeometryResult, triggerRouteGeometryGeneration } = await import('@ulasim20/data-access-transport-api')
+    const mockedApiGet = vi.mocked(apiGet)
+    const mockedGeom = vi.mocked(getRouteGeometryResult)
+    const mockedTrigger = vi.mocked(triggerRouteGeometryGeneration)
+    mockedGeom.mockResolvedValue({ status: 'miss' })
+    mockedTrigger.mockResolvedValue(undefined)
+    mockedApiGet.mockImplementation(async (url: string) => {
+      if (String(url).includes('GetRouteStations')) return { value: { lineName: '320', stations: [] } }
+      if (String(url).includes('GetLiveData')) return { value: [{ plate: 'P1', latitude: '37,77', longitude: '29,08', speed: '0', routeCode: '320', stopId: 1 }] }
+      return { value: [] }
+    })
+
+    const { result } = renderHook(() => useTransitMap())
+    await waitFor(() => expect(result.current.processedStations.length).toBeGreaterThan(0))
+
+    vi.useFakeTimers()
+    try {
+      await act(async () => { await result.current.handleSelectLine('320', 'test') })
+      expect(result.current.selectedLine?.vehicles).toHaveLength(1)
+
+      mockedApiGet.mockImplementation(async (url: string) => {
+        if (String(url).includes('GetLiveData')) return { value: [
+          { plate: 'P1', latitude: '37,77', longitude: '29,08', speed: '0', routeCode: '320', stopId: 1 },
+          { plate: 'P2', latitude: '37,78', longitude: '29,09', speed: '0', routeCode: '320', stopId: 2 },
+        ] }
+        return { value: [] }
+      })
+      await act(async () => { await vi.advanceTimersByTimeAsync(15_000) })
+      expect(result.current.selectedLine?.vehicles).toHaveLength(2)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+})

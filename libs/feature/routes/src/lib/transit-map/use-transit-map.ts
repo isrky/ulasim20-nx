@@ -184,6 +184,23 @@ export function useTransitMap(opts: { searchParams?: URLSearchParams } = {}) {
     if (lineParam) handleSelectLine(lineParam, 'line-detail')
   }, [searchParams, handleSelectLine])
 
+  useEffect(() => {
+    if (!selectedLine) return
+    const lineCode = selectedLine.lineCode
+    const interval = setInterval(async () => {
+      try {
+        const liveRes = await apiGet<GetLiveDataResponse>(
+          `/UlasimBackend/api/Calc/GetLiveData?lineCode=${encodeURIComponent(lineCode)}`,
+        )
+        setSelectedLine((prev) => {
+          if (!prev || prev.lineCode !== lineCode) return prev
+          return { ...prev, vehicles: Array.isArray(liveRes.value) ? liveRes.value : [], vehiclesUpdatedAt: Date.now() }
+        })
+      } catch {}
+    }, 15_000)
+    return () => clearInterval(interval)
+  }, [selectedLine?.lineCode])
+
   return {
     rawStations,
     processedStations,
