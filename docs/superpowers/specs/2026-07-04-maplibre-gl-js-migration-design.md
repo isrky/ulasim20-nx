@@ -147,15 +147,18 @@ Three sources, four layers, all registered once after `map.on('load')`.
 
 ### Layers
 
-- `stops-clusters` (circle + symbol) — cluster bubble with count.
+- `stops-clusters` (two layers: circle for the bubble background, symbol for
+  the count text). Driven by source `cluster: true`,
   `clusterRadius: 40`, `clusterMaxZoom: 15`.
-- `stops-circles` (symbol) — green square styled to match today's
-  `stopIcon`. Filter: `['==', ['get', 'cluster'], false]`. `minzoom: 15`
-  (matches today's `MIN_STOP_ZOOM`).
+- `stops-circles` (symbol) — `icon-image: stop-green` generated from today's
+  `stopIcon` SVG. Filter: `['==', ['get', 'cluster'], false]`. `minzoom: 15`
+  (matches today's `MIN_STOP_ZOOM`; also implied by the source's
+  `clusterMaxZoom: 15`, kept explicit for clarity).
 - `route-line` (line) — `paint: { 'line-color': LINE_COLOR, 'line-width': 5,
   'line-opacity': 0.8 }`. Same look as today's `<Polyline pathOptions={…}>`.
-- `vehicles-symbols` (symbol) — `icon-image: bus-green`, `text-field: plate`,
-  `icon-allow-overlap: true`. Click opens `MapPopup` with line + plate.
+- `vehicles-symbols` (symbol) — `icon-image: bus-green`,
+  `text-field: ['get', 'plate']`, `icon-allow-overlap: true`. Click opens
+  `MapPopup` anchored at the feature coordinates.
 
 ### Click handlers
 
