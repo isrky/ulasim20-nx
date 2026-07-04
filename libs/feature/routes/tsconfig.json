@@ -38,6 +38,9 @@
       "path": "../../feature/planner"
     },
     {
+      "path": "../../ui/map"
+    },
+    {
       "path": "../../ui/page-shell"
     },
     {
