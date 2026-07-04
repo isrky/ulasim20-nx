@@ -76,17 +76,13 @@ export function useTransitMap(opts: { searchParams?: URLSearchParams } = {}) {
     return () => { cancelled = true }
   }, [])
 
-  const searchParamsKey = useMemo(
-    () => (opts.searchParams ?? new URLSearchParams()).toString(),
-    [opts.searchParams],
-  )
+  const searchParams = opts.searchParams ?? new URLSearchParams()
 
   useEffect(() => {
-    const sp = new URLSearchParams(searchParamsKey)
-    const latParam = sp.get('lat')
-    const lngParam = sp.get('lng')
-    const type = sp.get('type')
-    const nameParam = sp.get('name')
+    const latParam = searchParams.get('lat')
+    const lngParam = searchParams.get('lng')
+    const type = searchParams.get('type')
+    const nameParam = searchParams.get('name')
     if (latParam != null && lngParam != null) {
       const lat = Number(latParam.replace(',', '.'))
       const lng = Number(lngParam.replace(',', '.'))
@@ -94,7 +90,7 @@ export function useTransitMap(opts: { searchParams?: URLSearchParams } = {}) {
         const nextFly = { lat, lng }
         setFlyTarget((prev) => (prev && prev.lat === lat && prev.lng === lng ? prev : nextFly))
         if (type === 'refill') {
-          const idParam = sp.get('id')
+          const idParam = searchParams.get('id')
           const id = idParam != null ? Number(idParam) : undefined
           const nextRefill: RefillPoint = {
             lat,
@@ -118,7 +114,7 @@ export function useTransitMap(opts: { searchParams?: URLSearchParams } = {}) {
     } else {
       setRefillPoint((prev) => (prev === null ? prev : null))
     }
-  }, [searchParamsKey])
+  }, [searchParams])
 
   const handleSelectLine = useCallback(async (_lineCode: string, _source = 'map') => {
     // implemented in Task 10
