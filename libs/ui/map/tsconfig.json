@@ -7,9 +7,11 @@
     "declarationMap": true,
     "outDir": "dist",
     "noEmit": false,
-    "tsBuildInfoFile": "./.tsbuildinfo"
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "types": ["@testing-library/jest-dom", "vitest/globals"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"],
   "references": [
     { "path": "../../types/transport" }
   ]

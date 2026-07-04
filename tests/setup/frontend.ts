@@ -5,6 +5,9 @@ import { afterEach, beforeEach, vi } from 'vitest'
 // Ensure DOM cleanup between tests
 afterEach(() => {
   cleanup()
+  if (document.body.children.length > 0) {
+    document.body.innerHTML = ''
+  }
 })
 
 // Polyfills for jsdom gaps that shadcn/ui / Radix rely on
