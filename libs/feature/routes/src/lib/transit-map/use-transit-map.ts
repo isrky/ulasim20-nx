@@ -1,7 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { getAllStations, type Station, type RouteStation } from '@ulasim20/data-access-transport-api'
+import {
+  apiGet,
+  getAllStations,
+  getRouteGeometryResult,
+  triggerRouteGeometryGeneration,
+  type RouteStation,
+  type Station,
+} from '@ulasim20/data-access-transport-api'
+import { fetchDirectKmzRouteGeometry } from '@ulasim20/feature-planner'
 import { buildStationIndex, type IndexEntry } from '@ulasim20/util-search'
-import { trackStopLookup } from '@ulasim20/util-analytics'
+import {
+  trackLineLookup,
+  trackRouteMapOpen,
+  trackStopLookup,
+} from '@ulasim20/util-analytics'
 
 export interface ProcessedStation {
   stationId: number
@@ -17,6 +29,17 @@ export interface LiveVehicle {
   speed: string
   routeCode: string
   stopId: number
+}
+
+interface GetRouteStationsResponse {
+  value: {
+    lineName?: string
+    stations: RouteStation[]
+  }
+}
+
+interface GetLiveDataResponse {
+  value: LiveVehicle[]
 }
 
 export interface SelectedLineInfo {
@@ -116,9 +139,50 @@ export function useTransitMap(opts: { searchParams?: URLSearchParams } = {}) {
     }
   }, [searchParams])
 
-  const handleSelectLine = useCallback(async (_lineCode: string, _source = 'map') => {
-    // implemented in Task 10
+  const handleSelectLine = useCallback(async (lineCode: string, source = 'map') => {
+    try {
+      trackLineLookup({ lineCode, source })
+      setSelectedLine(null)
+      const [stationsRes, liveRes, geometryResult] = await Promise.all([
+        apiGet<GetRouteStationsResponse>(`/UlasimBackend/api/Calc/GetRouteStations?routeCode=${encodeURIComponent(lineCode)}`),
+        apiGet<GetLiveDataResponse>(`/UlasimBackend/api/Calc/GetLiveData?lineCode=${encodeURIComponent(lineCode)}`).catch(() => ({ value: [] } as GetLiveDataResponse)),
+        getRouteGeometryResult(lineCode).catch(() => ({ status: 'miss' as const })),
+      ])
+      const stList = Array.isArray(stationsRes?.value?.stations) ? stationsRes.value.stations : []
+      let geometry: [number, number][] | null = null
+      let geometryError: string | null = null
+
+      if (geometryResult.status === 'hit') {
+        geometry = geometryResult.geometry.coordinates
+        trackRouteMapOpen({ lineCode, source: 'backend-cache', entryPoint: source })
+      } else {
+        void triggerRouteGeometryGeneration(lineCode)
+        try {
+          const directGeometry = await fetchDirectKmzRouteGeometry(lineCode)
+          geometry = directGeometry.coordinates
+          trackRouteMapOpen({ lineCode, source: 'direct-kmz', entryPoint: source })
+        } catch {
+          geometryError = 'Güzergah çizilemedi'
+        }
+      }
+
+      setSelectedLine({
+        lineCode,
+        lineName: stationsRes?.value?.lineName || lineCode,
+        stations: stList,
+        vehicles: Array.isArray(liveRes.value) ? liveRes.value : [],
+        geometry,
+        vehiclesUpdatedAt: Date.now(),
+        geometryError,
+      })
+      setSelectedStop(null)
+    } catch {}
   }, [])
+
+  useEffect(() => {
+    const lineParam = searchParams.get('line')
+    if (lineParam) handleSelectLine(lineParam, 'line-detail')
+  }, [searchParams, handleSelectLine])
 
   return {
     rawStations,

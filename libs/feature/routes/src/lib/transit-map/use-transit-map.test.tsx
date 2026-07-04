@@ -81,3 +81,75 @@ describe('useTransitMap — searchParams reactivity', () => {
     await waitFor(() => expect(result.current.flyTarget).toEqual({ lat: 37.8, lng: 29.1 }))
   })
 })
+
+describe('useTransitMap — handleSelectLine', () => {
+  it('uses cached backend geometry when available and skips trigger', async () => {
+    const { apiGet, getRouteGeometryResult, triggerRouteGeometryGeneration } = await import('@ulasim20/data-access-transport-api')
+    const mockedApiGet = vi.mocked(apiGet)
+    const mockedGeom = vi.mocked(getRouteGeometryResult)
+    const mockedTrigger = vi.mocked(triggerRouteGeometryGeneration)
+
+    mockedApiGet.mockImplementation(async (url: string) => {
+      if (String(url).includes('GetRouteStations')) {
+        return { value: { lineName: '320', stations: [] } }
+      }
+      return { value: [] }
+    })
+    mockedGeom.mockResolvedValueOnce({
+      status: 'hit',
+      geometry: { lineCode: '320', coordinates: [[37.77, 29.08]], source: 'kmz-direct' },
+    })
+
+    const { result } = renderHook(() => useTransitMap())
+    await waitFor(() => expect(result.current.processedStations.length).toBeGreaterThan(0))
+    await act(async () => { await result.current.handleSelectLine('320', 'test') })
+
+    expect(mockedTrigger).not.toHaveBeenCalled()
+    expect(result.current.selectedLine?.geometry).toEqual([[37.77, 29.08]])
+  })
+
+  it('falls back to direct KMZ when cache misses and reports geometry error if both fail', async () => {
+    const { apiGet, getRouteGeometryResult, triggerRouteGeometryGeneration } = await import('@ulasim20/data-access-transport-api')
+    const { fetchDirectKmzRouteGeometry } = await import('@ulasim20/feature-planner')
+    const mockedApiGet = vi.mocked(apiGet)
+    const mockedGeom = vi.mocked(getRouteGeometryResult)
+    const mockedTrigger = vi.mocked(triggerRouteGeometryGeneration)
+    const mockedDirect = vi.mocked(fetchDirectKmzRouteGeometry)
+
+    mockedApiGet.mockImplementation(async (url: string) => {
+      if (String(url).includes('GetRouteStations')) return { value: { lineName: '320', stations: [] } }
+      return { value: [] }
+    })
+    mockedGeom.mockResolvedValueOnce({ status: 'miss' })
+    mockedTrigger.mockResolvedValueOnce(undefined)
+    mockedDirect.mockRejectedValueOnce(new Error('no geometry'))
+
+    const { result } = renderHook(() => useTransitMap())
+    await waitFor(() => expect(result.current.processedStations.length).toBeGreaterThan(0))
+    await act(async () => { await result.current.handleSelectLine('320', 'test') })
+
+    expect(mockedTrigger).toHaveBeenCalledWith('320')
+    expect(result.current.selectedLine?.geometry).toBeNull()
+    expect(result.current.selectedLine?.geometryError).toBe('Güzergah çizilemedi')
+  })
+
+  it('reacts to ?line= URL param by calling handleSelectLine', async () => {
+    const { apiGet, getRouteGeometryResult, triggerRouteGeometryGeneration } = await import('@ulasim20/data-access-transport-api')
+    const mockedApiGet = vi.mocked(apiGet)
+    const mockedGeom = vi.mocked(getRouteGeometryResult)
+    const mockedTrigger = vi.mocked(triggerRouteGeometryGeneration)
+
+    mockedApiGet.mockImplementation(async (url: string) => {
+      if (String(url).includes('GetRouteStations')) return { value: { lineName: '320', stations: [] } }
+      return { value: [] }
+    })
+    mockedGeom.mockResolvedValue({ status: 'miss' })
+    mockedTrigger.mockResolvedValue(undefined)
+
+    const params = new URLSearchParams('line=320')
+    const { result } = renderHook(() =>
+      useTransitMap({ searchParams: params }),
+    )
+    await waitFor(() => expect(result.current.selectedLine?.lineCode).toBe('320'))
+  })
+})
