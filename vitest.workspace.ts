@@ -22,7 +22,7 @@ export default defineWorkspace([
       environment: 'jsdom',
       include: [
         'apps/web/src/**/*.test.{ts,tsx}',
-        'libs/feature/**/src/**/*.test.tsx',
+        'libs/feature/**/src/**/*.test.{ts,tsx}',
         'libs/ui/**/src/**/*.test.tsx',
         'libs/util/hooks/src/**/*.test.{ts,tsx}'
       ],
