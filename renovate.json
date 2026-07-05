@@ -23,7 +23,6 @@
         "pocketbase",
         "msw",
         "wrangler",
-        "react-leaflet",
         "react-day-picker",
         "react-resizable-panels",
         "recharts",

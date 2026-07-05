@@ -6,6 +6,6 @@ test('harita: line deep link renders the line panel', async ({ page }) => {
 })
 
 test('harita: refill deep link shows the refill panel', async ({ page }) => {
-  await page.goto('/harita?lat=37.7765&lng=29.0864&type=refill&name=Test&type=refill')
+  await page.goto('/harita?lat=37.7765&lng=29.0864&type=refill&name=Test')
   await expect(page.getByText('Nasıl giderim')).toBeVisible({ timeout: 10_000 })
 })

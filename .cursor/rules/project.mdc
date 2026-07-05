@@ -32,7 +32,7 @@ Arayüz dili Türkçe. Kod, commit mesajları ve değişken isimleri İngilizce.
 | Frontend | React 18, Vite 7, TypeScript (strict) |
 | Stil | Tailwind CSS v4, oklch renk sistemi, `tw-animate-css` |
 | UI Bileşenleri | shadcn/ui (Radix UI primitives), Lucide icons |
-| Harita | Leaflet + react-leaflet |
+| Harita | MapLibre GL JS |
 | Yönlendirme | react-router-dom v6 |
 | Durum Yönetimi | React Context (`TransitProvider`) |
 | Backend | Hono, Cloudflare Workers, KV (cache) |
