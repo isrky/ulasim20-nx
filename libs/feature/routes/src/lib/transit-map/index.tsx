@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import type { Feature, FeatureCollection, LineString, Point } from 'geojson'
 import { Locate, X } from 'lucide-react'
 import { Button } from '@ulasim20/ui-primitives'
 import { MapView, useMapInstance } from '@ulasim20/ui-map'
@@ -56,7 +55,7 @@ export default function TransitMap() {
 
   const tx = useTransitMap({ searchParams })
 
-  const stopsFC = useMemo<FeatureCollection<Point, { stationId: number; stationName: string }>>(() => ({
+  const stopsFC = useMemo<GeoJSON.FeatureCollection<GeoJSON.Point, { stationId: number; stationName: string }>>(() => ({
     type: 'FeatureCollection',
     features: tx.processedStations.map((s) => ({
       type: 'Feature',
@@ -65,7 +64,7 @@ export default function TransitMap() {
     })),
   }), [tx.processedStations])
 
-  const vehiclesFC = useMemo<FeatureCollection<Point, { plate: string; routeCode: string }>>(() => {
+  const vehiclesFC = useMemo<GeoJSON.FeatureCollection<GeoJSON.Point, { plate: string; routeCode: string }>>(() => {
     const list = tx.selectedLine?.vehicles ?? []
     return {
       type: 'FeatureCollection',
@@ -78,7 +77,7 @@ export default function TransitMap() {
     }
   }, [tx.selectedLine?.vehicles])
 
-  const routeFC = useMemo<Feature<LineString, Record<string, never>> | null>(() => {
+  const routeFC = useMemo<GeoJSON.Feature<GeoJSON.LineString, Record<string, never>> | null>(() => {
     const g = tx.selectedLine?.geometry
     if (!g || g.length === 0) return null
     return { type: 'Feature', geometry: { type: 'LineString', coordinates: g }, properties: {} as Record<string, never> }

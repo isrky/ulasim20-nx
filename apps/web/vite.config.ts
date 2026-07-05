@@ -13,12 +13,6 @@ const redirectsDest = path.resolve(__dirname, 'dist/_redirects')
 const workerDest = path.resolve(__dirname, 'dist/_worker.js')
 const pluginMarker = path.resolve(__dirname, 'dist/.plugin-ran')
 
-const routesJson = {
-  version: 1,
-  include: ['/denizli-api/*', '/api/*', '/route-api/*'],
-  exclude: [],
-}
-
 export default defineConfig({
   plugins: [
     ...plugins,

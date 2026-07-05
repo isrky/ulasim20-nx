@@ -7,7 +7,6 @@ vi.mock('maplibre-gl', () => {
     setPopup = vi.fn().mockReturnThis()
     remove = vi.fn()
     addTo = vi.fn().mockReturnThis()
-    constructor(_opts?: unknown) {}
   }
   return { Marker }
 })

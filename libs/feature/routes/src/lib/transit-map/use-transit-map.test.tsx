@@ -17,7 +17,13 @@ vi.mock('@ulasim20/util-analytics', () => ({
   trackStopLookup: vi.fn(),
 }))
 
-import { getAllStations } from '@ulasim20/data-access-transport-api'
+import {
+  apiGet,
+  getAllStations,
+  getRouteGeometryResult,
+  triggerRouteGeometryGeneration,
+} from '@ulasim20/data-access-transport-api'
+import { fetchDirectKmzRouteGeometry } from '@ulasim20/feature-planner'
 import { useTransitMap } from './use-transit-map'
 
 const mockedGetAllStations = vi.mocked(getAllStations)
@@ -84,7 +90,6 @@ describe('useTransitMap — searchParams reactivity', () => {
 
 describe('useTransitMap — handleSelectLine', () => {
   it('uses cached backend geometry when available and skips trigger', async () => {
-    const { apiGet, getRouteGeometryResult, triggerRouteGeometryGeneration } = await import('@ulasim20/data-access-transport-api')
     const mockedApiGet = vi.mocked(apiGet)
     const mockedGeom = vi.mocked(getRouteGeometryResult)
     const mockedTrigger = vi.mocked(triggerRouteGeometryGeneration)
@@ -109,8 +114,6 @@ describe('useTransitMap — handleSelectLine', () => {
   })
 
   it('falls back to direct KMZ when cache misses and reports geometry error if both fail', async () => {
-    const { apiGet, getRouteGeometryResult, triggerRouteGeometryGeneration } = await import('@ulasim20/data-access-transport-api')
-    const { fetchDirectKmzRouteGeometry } = await import('@ulasim20/feature-planner')
     const mockedApiGet = vi.mocked(apiGet)
     const mockedGeom = vi.mocked(getRouteGeometryResult)
     const mockedTrigger = vi.mocked(triggerRouteGeometryGeneration)
@@ -134,7 +137,6 @@ describe('useTransitMap — handleSelectLine', () => {
   })
 
   it('reacts to ?line= URL param by calling handleSelectLine', async () => {
-    const { apiGet, getRouteGeometryResult, triggerRouteGeometryGeneration } = await import('@ulasim20/data-access-transport-api')
     const mockedApiGet = vi.mocked(apiGet)
     const mockedGeom = vi.mocked(getRouteGeometryResult)
     const mockedTrigger = vi.mocked(triggerRouteGeometryGeneration)
@@ -156,7 +158,6 @@ describe('useTransitMap — handleSelectLine', () => {
 
 describe('useTransitMap — vehicle polling', () => {
   it('refreshes selectedLine.vehicles every 15s while a line is selected', async () => {
-    const { apiGet, getRouteGeometryResult, triggerRouteGeometryGeneration } = await import('@ulasim20/data-access-transport-api')
     const mockedApiGet = vi.mocked(apiGet)
     const mockedGeom = vi.mocked(getRouteGeometryResult)
     const mockedTrigger = vi.mocked(triggerRouteGeometryGeneration)

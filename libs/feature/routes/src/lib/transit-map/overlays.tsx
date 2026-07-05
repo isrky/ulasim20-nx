@@ -1,24 +1,18 @@
 import { useEffect } from 'react'
-import type {
-  Feature,
-  FeatureCollection,
-  LineString,
-  Point,
-} from 'geojson'
 import type { Map as MapLibreMap } from 'maplibre-gl'
 import { useMapInstance } from '@ulasim20/ui-map'
 import { LINE_COLOR, MIN_STOP_ZOOM } from './constants'
 import { busIconSvg, stopIconSvg, svgToDataUrl } from './icons'
 
-type StopsFC = FeatureCollection<Point, { stationId: number; stationName: string }>
-type VehiclesFC = FeatureCollection<Point, { plate: string; routeCode: string }>
-type RouteFC = FeatureCollection<LineString> | { type: 'Feature'; geometry: LineString; properties: Record<string, never> } | null
+type StopsFC = GeoJSON.FeatureCollection<GeoJSON.Point, { stationId: number; stationName: string }>
+type VehiclesFC = GeoJSON.FeatureCollection<GeoJSON.Point, { plate: string; routeCode: string }>
+type RouteFC = GeoJSON.FeatureCollection<GeoJSON.LineString> | { type: 'Feature'; geometry: GeoJSON.LineString; properties: Record<string, never> } | null
 
 function stopsToFC(stops: StopsFC): StopsFC { return stops }
 function vehiclesToFC(vehicles: VehiclesFC): VehiclesFC { return vehicles }
-function routeToFeatureCollection(geom: [number, number][] | null): FeatureCollection<LineString> {
+function routeToFeatureCollection(geom: [number, number][] | null): GeoJSON.FeatureCollection<GeoJSON.LineString> {
   if (!geom || geom.length === 0) return { type: 'FeatureCollection', features: [] }
-  const feature: Feature<LineString> = {
+  const feature: GeoJSON.Feature<GeoJSON.LineString> = {
     type: 'Feature',
     geometry: { type: 'LineString', coordinates: geom },
     properties: {},
