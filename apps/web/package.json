@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -p . --noEmit && wrangler pages functions build functions --outdir .functions-built --output-routes-path .functions-built/_routes.json && vite build",
+    "build": "tsc -p . --noEmit && mkdir -p .functions-built && wrangler pages functions build functions --outdir .functions-built --output-routes-path .functions-built/_routes.json && vite build",
     "preview": "vite preview",
     "pages:dev": "wrangler pages dev dist"
   },
