@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "exports": { ".": "./src/index.ts" },
   "dependencies": {
-    "maplibre-gl": "^4.7.1"
+    "maplibre-gl": "^6.4.1"
   },
   "peerDependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" },
   "devDependencies": {
