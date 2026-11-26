@@ -23,7 +23,7 @@
     "@ulasim20/util-hooks": "workspace:*",
     "@ulasim20/util-search": "workspace:*",
     "lucide-react": "^0.552.0",
-    "maplibre-gl": "^4.7.1",
+    "maplibre-gl": "^6.0.0",
     "react-router-dom": "^6.30.3"
   },
   "peerDependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" },
